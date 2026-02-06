@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.anaptecs.jeaf</groupId>
+	<artifactId>jeaf-generator-project-parent</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+	<name>JEAF Generator Project Parent</name>
+	<description>This POM can be used as as starting point for projects using JEAF Generator, either as parent POM or as template for your own parent POM.</description>
+	<url>https://www.jeaf-generator.io</url>
+
+	<developers>
+		<developer>
+			<name>JEAF Development Team</name>
+			<email>jeaf@anaptecs.ch</email>
+			<organization>anaptecs GmbH</organization>
+			<organizationUrl>http://www.anaptecs.ch</organizationUrl>
+		</developer>
+	</developers>
+
+
+	<scm>
+		<connection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</connection>
+		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</developerConnection>
+		<url>https://github.com/anaptecs/jeaf-project-parent</url>
+		<tag>HEAD</tag>
+	</scm>
+
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/anaptecs/jeaf-generator-project-parent</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+
+	<properties>
+		<!-- Properties are only required / helpful, if no parent POM is present -->
+		<java.release.version>21</java.release.version>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss.SSS</maven.build.timestamp.format>
+		
+		<dest.dir>../target</dest.dir>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<src-gen.dir>${project.build.directory}/src-gen</src-gen.dir>
+
+		<project.scm.id>git.scm</project.scm.id>
+
+
+		<!-- Versions of plugin used for build process in general -->
+		<maven.compiler.version>3.15.0</maven.compiler.version>
+		<maven.jar.version>3.5.0</maven.jar.version>
+		<maven.deploy.version>3.1.4</maven.deploy.version>
+		<maven.versions.version>2.21.0</maven.versions.version>
+		<maven.surefire.version>3.5.4</maven.surefire.version>
+
+
+		<!-- Versions for Maven Plugins required by projects making use of JEAF Generator -->
+		<maven.build.helper.version>3.6.1</maven.build.helper.version>
+		<maven.source.version>3.4.0</maven.source.version>
+
+
+		<!-- Plugin versions required to checkin generated code (activated through profile "CheckinGeneratedCode"") -->
+		<maven.scmplugin.version>2.2.1</maven.scmplugin.version>
+
+
+		<!-- Versions required for OSS release process only (profile "OSSRelease") -->
+		<maven.gpg.version>3.2.8</maven.gpg.version>
+		<maven.javadoc.version>3.12.0</maven.javadoc.version>
+		<maven.release.version>3.3.1</maven.release.version>
+		<maven.central-publishing.version>0.10.0</maven.central-publishing.version>
+
+
+		<!-- Custom section for properties -->
+		<junit.version>5.13.4</junit.version>
+		<junit.platform.version>1.12.2</junit.platform.version>
+		<junit3.version>3.8.2</junit3.version>
+	</properties>
+
+
+	<dependencyManagement>
+		<!-- Section for custom dependency management entries -->
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<!-- Section for custom dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<profiles>
+		<!-- Profile contains all plugin configurations that are required to check-in generated code during build. -->
+		<profile>
+			<id>CheckinGeneratedCode</id>
+			<build>
+				<plugins>
+					<plugin>
+					    <artifactId>maven-scm-plugin</artifactId>
+					    <version>${maven.scmplugin.version}</version>
+					    <executions>
+					    	<execution>
+					    		<id>CheckinGeneratedCode</id>
+					    		<goals>
+					    			<goal>checkin</goal>
+					    		</goals>
+					    		<phase>prepare-package</phase>
+					    		<configuration>
+					    			<message>[maven-scm-plugin] Checkin of generated files during build</message>
+					    			<excludes>**/pom.xml</excludes>
+					    			<includes>**/*</includes>
+					    			<basedir>${basedir}/src-gen</basedir>
+					    		</configuration>
+					    	</execution>
+					    </executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Profile with all settings for releasing to central maven repo -->
+		<profile>
+			<id>OSSRelease</id>
+			<build>
+				<plugins>
+					<!-- PGP Plugin is needed to sign jars -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven.gpg.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+			                    <configuration>
+			                       <gpgArguments>
+			                          <arg>--pinentry-mode</arg>
+			                          <arg>loopback</arg>
+			                       </gpgArguments>
+			                    </configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven.javadoc.version}</version>
+						<configuration>
+							<aggregate>true</aggregate>
+							<failOnError>false</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${maven.source.version}</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>${maven.central-publishing.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>central</publishingServerId>
+							<autoPublish>false</autoPublish>
+							<waitUntil>validated</waitUntil>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>${maven.release.version}</version>
+						<configuration>
+							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<useReleaseProfile>false</useReleaseProfile>
+							<releaseProfiles>release</releaseProfiles>
+							<goals>deploy</goals>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<release>${java.release.version}</release>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.jar.version}</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${maven.build.helper.version}</version>
+				<executions>
+					<execution>
+						<id>sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/main/java</source>
+								<source>${basedir}/src-gen/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/test/java</source>
+								<source>${basedir}/src-gen/test/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/resources</directory>
+								</resource>
+								<resource>
+									<directory>${basedir}/src-gen/main/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-resources</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/test/resources</directory>
+								</resource>
+								<resource>
+									<directory>${basedir}/src-gen/test/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- 
+				Here we override the parent-pom attach-sources execution which calls sources:jar goal. That goal forks 
+				the lifecycle, causing the generate-sources phase to be called twice for the install goal. 
+				This causes any other plugins bound to the generate-sources phase like JEAF Generator to be called 
+				twice, which results in nothing but duplicate processing and longer build times.
+				
+				Big thanks to: http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html 
+			-->
+		    <plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>DISABLE_FORKED_LIFECYCLE</phase>
+					</execution>
+
+					<execution>
+						<id>attach-sources-no-fork</id>
+						<inherited>true</inherited>
+						<goals>
+    						<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven.deploy.version}</version>
+				<configuration>
+					<deployAtEnd>true</deployAtEnd>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven.versions.version}</version>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
