@@ -1634,7 +1634,7 @@
 
 		<!-- Profile with all settings for releasing to central maven repo -->
 		<profile>
-			<id>OSSRelease</id>
+			<id>Release</id>
 			<build>
 				<plugins>
 					<!-- PGP Plugin is needed to sign jars -->
