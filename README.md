@@ -53,7 +53,7 @@ To run JEAF Generator using a local XMI file you have to configure at least the 
 
 ```xml
 <properties>
-  	<!--
+		<!--
 			Directory which contains all XMI files. The files have to be exported from MagicDraw UML using its Eclipse UML2
 			Export v2.x (File - Export To - Eclipse UML2 (v2.0x) XMI File)
 		-->
