@@ -4,7 +4,7 @@
 
 	<groupId>com.anaptecs.jeaf</groupId>
 	<artifactId>jeaf-generator-project-parent</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.5.0</version>
 
 	<packaging>pom</packaging>
 	<name>JEAF Generator Project Parent</name>
@@ -25,7 +25,7 @@
 		<connection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</connection>
 		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</developerConnection>
 		<url>https://github.com/anaptecs/jeaf-generator-project-parent</url>
-		<tag>HEAD</tag>
+		<tag>v0.5.0</tag>
 	</scm>
 
 
@@ -148,7 +148,7 @@
 			Directory which contains all XMI files. The files have to be exported from MagicDraw UML using its Eclipse UML2
 			Export v2.x (File - Export To - Eclipse UML2 (v2.0x) XMI File)
 		-->
-		<xmiDirectory></xmiDirectory>
+		<xmiDirectory />
 
 		<!--
 			Group ID of the artifact that contains the XMI files of the UML model.
@@ -156,7 +156,7 @@
 			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
 			referencing an artifact that contains the XMI files.
 		-->
-		<modelArtifactGroupID></modelArtifactGroupID>
+		<modelArtifactGroupID />
 
 		<!--
 			Artifact ID of the artifact that contains the XMI files of the UML model.
@@ -164,7 +164,7 @@
 			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
 			referencing an artifact that contains the XMI files.
 		-->
-		<modelArtifactArtifactID></modelArtifactArtifactID>
+		<modelArtifactArtifactID />
 
 		<!--
 			XMI Path inside the artifact that contains the XMI files of the UML model.
@@ -172,29 +172,29 @@
 		<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
 
 		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
-		<umlPackage></umlPackage>
+		<umlPackage />
 
 		<!--
 			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
 			name of the file has to be provided as we assume that the file is located in the XMI directory.
 		-->
-		<umlModelFile></umlModelFile>
+		<umlModelFile />
 
 		<!--
 			In addition to standard profile of JEAF Generator it is also possible to add a custom profile that contains your
 			own stereotypes.
 		-->
-		<customProfileFile></customProfileFile>
+		<customProfileFile />
 
 		<!--
 			Name of the root template for customer specific extensions
 		-->
-		<customRootTemplate></customRootTemplate>
+		<customRootTemplate />
 
 		<!--
 			List of custom check files that will be used to run customer specific checks of the UML model.
 		-->
-		<customCheckFiles></customCheckFiles>
+		<customCheckFiles />
 
 		<!--
 			By default custom templates are only executed in case that also default templates are executed. Using this switch
@@ -291,7 +291,7 @@
 		<!--
 			Version information for header of generated files.
 		-->
-		<fileHeaderVersion></fileHeaderVersion>
+		<fileHeaderVersion />
 
 		<!--
 			Parameter can be used to disable formatting of generated sources and resources in general.
@@ -347,18 +347,18 @@
 			When working with soft links it might be a requirement to append a suffix to the name of a property from the UML
 			model. This can be done using this configuration parameter.
 		-->
-		<softLinkSuffix></softLinkSuffix>
+		<softLinkSuffix />
 
 		<!--
 			Parameter can be used to provide the publishing date of the next major version of an API. This date will used be to
 			identify which deprecation will be removed / breaking changes will become active with the next major version.
 		-->
-		<nextMajorReleasePublishingDate></nextMajorReleasePublishingDate>
+		<nextMajorReleasePublishingDate />
 
 		<!--
 			Parameter can be used to provide the version number of the next major version of an API.
 		-->
-		<nextMajorReleaseVersion></nextMajorReleaseVersion>
+		<nextMajorReleaseVersion />
 
 
 		<!--
@@ -488,7 +488,7 @@
 			for the soft link. The concrete java type (its fully qualified class name) that should be used can be defined
 			through this parameter.
 		-->
-		<javaGenericSoftLinkType></javaGenericSoftLinkType>
+		<javaGenericSoftLinkType />
 
 			<!--
 			Switch can be used to define if a soft link suffix should be used when for generated Java code.
@@ -659,7 +659,7 @@
 			Parameter can be used to also add the defined comment of code generation to the @Generated annotation. Parameter is
 			only relevant if addGeneratorAnnotation is set to true.
 		-->
-		<generationComment></generationComment>
+		<generationComment />
 
 
 		<!--
@@ -702,7 +702,7 @@
 				#jackson3Suffix
 				#jackson3Subpackage
 		-->
-		<jackson2Suffix></jackson2Suffix>
+		<jackson2Suffix />
 
 		<!--
 			Parameter can be used to define a sub package where all Jackson 2 specific classes will be located.<br>
@@ -715,7 +715,7 @@
 				#jackson3Suffix
 				#jackson3Subpackage
 		-->
-		<jackson2Subpackage></jackson2Subpackage>
+		<jackson2Subpackage />
 
 		<!--
 			Parameter can be used to define a suffix for generated Jackson 3 specific classes.<br>
@@ -730,7 +730,7 @@
 				#jackson2Subpackage
 				#jackson3Subpackage
 		-->
-		<jackson3Suffix></jackson3Suffix>
+		<jackson3Suffix />
 
 		<!--
 			Parameter can be used to define a sub package where all Jackson 2 specific classes will be located.<br>
@@ -743,7 +743,7 @@
 				#jackson2Subpackage
 				#jackson3Suffix
 		-->
-		<jackson3Subpackage></jackson3Subpackage>
+		<jackson3Subpackage />
 
 		<!--
 			Switch is used to generate @JsonAutoDetect annotation directly on generated classes. This annotation is required
@@ -888,7 +888,7 @@
 			Parameter defines the prefix that should be used for REST paths of generated REST resources / controllers. The
 			value provided here will be used as prefix. To be a valid path it has to start with '/' and must not end with '/'.
 		-->
-		<restPathPrefix></restPathPrefix>
+		<restPathPrefix />
 
 		<!--
 			Parameter can be used to define the default http status code that should be used when REST requests are successful.
@@ -1012,7 +1012,7 @@
 				#/components/schemas/Softlink</code>
 				../base/product-base.yml#/components/schemas/Softlink</code>
 		-->
-		<openAPIGenericSoftLinkType></openAPIGenericSoftLinkType>
+		<openAPIGenericSoftLinkType />
 
 		<!--
 			Switch can be used to define if a soft link suffix should be used in OpenAPI.
@@ -1034,7 +1034,7 @@
 			
 			By default no quotation is used.
 		-->
-		<openAPILiteralQuotationCharacter></openAPILiteralQuotationCharacter>
+		<openAPILiteralQuotationCharacter />
 
 		<!--
 			Configuration parameter allows to define an explicit quotation character for example values in OpenAPI
@@ -1045,7 +1045,7 @@
 			Please be aware that quoting examples is not necessary except for rare cases. So instead of enabling it in general
 			it's recommended to use quotes only in cases were it is really required.
 		-->
-		<openAPIExampleQuotationCharacter></openAPIExampleQuotationCharacter>
+		<openAPIExampleQuotationCharacter />
 
 		<!--
 			Switch can be used to suppress technical http headers in generated Java code.
@@ -1068,37 +1068,37 @@
 			Configuration parameter can be used to define the OpenAPI contact name. The provided value will only be used if
 			none is explicitly defined in the UML model.
 		-->
-		<openAPIContactName></openAPIContactName>
+		<openAPIContactName />
 
 		<!--
 			Configuration parameter can be used to define the OpenAPI contact URL. The provided value will only be used if none
 			is explicitly defined in the UML model.
 		-->
-		<openAPIContactURL></openAPIContactURL>
+		<openAPIContactURL />
 
 		<!--
 			Configuration parameter can be used to define the OpenAPI contact email. The provided value will only be used if
 			none is explicitly defined in the UML model.
 		-->
-		<openAPIContactEmail></openAPIContactEmail>
+		<openAPIContactEmail />
 
 		<!--
 			Configuration parameter can be used to define the OpenAPI license name. The provided value will only be used if
 			none is explicitly defined in the UML model.
 		-->
-		<openAPILicenseName></openAPILicenseName>
+		<openAPILicenseName />
 
 		<!--
 			Configuration parameter can be used to define the OpenAPI license URL. The provided value will only be used if none
 			is explicitly defined in the UML model.
 		-->
-		<openAPILicenseURL></openAPILicenseURL>
+		<openAPILicenseURL />
 
 		<!--
 			Configuration parameter can be used to define the OpenAPI terms of use URL. The provided value will only be used if
 			none is explicitly defined in the UML model.
 		-->
-		<openAPITermsOfUseURL></openAPITermsOfUseURL>
+		<openAPITermsOfUseURL />
 
 		<!--
 			OpenAPI standard defines that for whatever reason some header fields should not be mentioned in the OpenAPI
@@ -1139,18 +1139,18 @@
 		<!--
 			Title of the types report.
 		-->
-		<typesReportName></typesReportName>
+		<typesReportName />
 
 		<!--
 			Name of the file that contains the types report. The file extension will be chosen based on the report format.
 		-->
-		<typesReportFileName></typesReportFileName>
+		<typesReportFileName />
 
 		<!--
 			Name of the stereotypes that should be considered when creating types report. Multiple stereotypes have to be
 			separated using ';'.
 		-->
-		<typesReportStereotypes></typesReportStereotypes>
+		<typesReportStereotypes />
 
 		<!--
 			Switch defines if within the types report also a row for alias names should be added.
@@ -1160,7 +1160,7 @@
 		<!--
 			Switch defines the name of the alias row.
 		-->
-		<typesReportAliasRowName></typesReportAliasRowName>
+		<typesReportAliasRowName />
 
 		<!--
 			Switch defines if for types report also the package of every type should be shown.
@@ -1192,13 +1192,13 @@
 		<!--
 			Title of the breaking changes report.
 		-->
-		<breakingChangesReportName></breakingChangesReportName>
+		<breakingChangesReportName />
 
 		<!--
 			Name of the file that contains the breaking changes report. The file extension will be chosen based on the report
 			format.
 		-->
-		<breakingChangesReportFileName></breakingChangesReportFileName>
+		<breakingChangesReportFileName />
 
 		<!--
 			Switch defines if for breaking changes report content should be grouped by package.
@@ -1214,13 +1214,13 @@
 		<!--
 			Title of the REST deprecation report.
 		-->
-		<restDeprecationReportName></restDeprecationReportName>
+		<restDeprecationReportName />
 
 		<!--
 			Name of the file that contains the REST deprecation report. The file extension will be chosen based on the report
 			format.
 		-->
-		<restDeprecationReportFileName></restDeprecationReportFileName>
+		<restDeprecationReportFileName />
 
 		<!--
 			Switch enables the generation of a Java deprecation report about the model parts which are configured to be	processed.
@@ -1230,13 +1230,13 @@
 		<!--
 			Title of the Java deprecation report.
 		-->
-		<javaDeprecationReportName></javaDeprecationReportName>
+		<javaDeprecationReportName />
 
 		<!--
 			Name of the file that contains the Java deprecation report. The file extension will be chosen based on the report
 			format.
 		-->
-		<javaDeprecationReportFileName></javaDeprecationReportFileName>
+		<javaDeprecationReportFileName />
 
 		<!--
 			Parameter defines the format of the deprecation report. Supported formats are MARKDOWN, HTML and XML.
@@ -1252,13 +1252,13 @@
 		<!--
 			Title of the security roles report.
 		-->
-		<securityRolesReportName></securityRolesReportName>
+		<securityRolesReportName />
 
 		<!--
 			Name of the file that contains the security roles report. The file extension will be chosen based on the report
 			format.
 		-->
-		<securityRolesReportFileName></securityRolesReportFileName>
+		<securityRolesReportFileName />
 
 		<!--
 			Parameter defines the format of the security roles report. Supported formats are MARKDOWN, HTML and XML.
