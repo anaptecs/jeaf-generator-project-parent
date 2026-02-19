@@ -1,0 +1,2171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.anaptecs.jeaf</groupId>
+	<artifactId>jeaf-generator-project-parent</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+	<name>JEAF Generator Project Parent</name>
+	<description>This POM can be used as as starting point for projects using JEAF Generator, either as parent POM or as template for your own parent POM.</description>
+	<url>https://www.jeaf-generator.io</url>
+
+	<developers>
+		<developer>
+			<name>JEAF Development Team</name>
+			<email>jeaf@anaptecs.ch</email>
+			<organization>anaptecs GmbH</organization>
+			<organizationUrl>http://www.anaptecs.ch</organizationUrl>
+		</developer>
+	</developers>
+
+
+	<scm>
+		<connection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</connection>
+		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</developerConnection>
+		<url>https://github.com/anaptecs/jeaf-project-parent</url>
+		<tag>HEAD</tag>
+	</scm>
+
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/anaptecs/jeaf-generator-project-parent</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+
+	<properties>
+		<!-- Properties are only required / helpful, if no parent POM is present -->
+		<java.release.version>17</java.release.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss.SSS</maven.build.timestamp.format>
+
+		<dest.dir>../target</dest.dir>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<src-gen.dir>${project.build.directory}/src-gen</src-gen.dir>
+
+		<project.scm.id>git.scm</project.scm.id>
+
+
+		<!-- Versions of plugin used for build process in general -->
+		<maven.compiler.version>3.15.0</maven.compiler.version>
+		<maven.jar.version>3.5.0</maven.jar.version>
+		<maven.deploy.version>3.1.4</maven.deploy.version>
+		<maven.versions.version>2.21.0</maven.versions.version>
+		<maven.surefire.version>3.5.4</maven.surefire.version>
+		<maven.assembly.version>3.2.0</maven.assembly.version>
+
+
+		<!-- Versions for Maven Plugins required by projects making use of JEAF Generator -->
+		<maven.build.helper.version>3.6.1</maven.build.helper.version>
+		<maven.source.version>3.4.0</maven.source.version>
+
+
+		<!-- Plugin versions required to checkin generated code (activated through profile "CheckinGeneratedCode"") -->
+		<maven.scmplugin.version>2.2.1</maven.scmplugin.version>
+
+
+		<!-- Versions required for OSS release process only (profile "OSSRelease") -->
+		<maven.gpg.version>3.2.8</maven.gpg.version>
+		<maven.javadoc.version>3.12.0</maven.javadoc.version>
+		<maven.release.version>3.3.1</maven.release.version>
+		<maven.central-publishing.version>0.10.0</maven.central-publishing.version>
+
+
+		<!-- Version of JEAF Generator that should be used. -->
+		<maven.jeaf-generator-plugin.version>1.28.3-SNAPSHOT</maven.jeaf-generator-plugin.version>
+
+		<!-- Versions for JEAF APIs (added via dependency management) -->
+		<jeaf-rest-api.version>2.0.0-RC1</jeaf-rest-api.version>
+		<jeaf-validation-api.version>1.8.0</jeaf-validation-api.version>
+
+		<!-- Version for Spring Boot (added via dependency management) -->
+		<spring-boot.version>4.0.2</spring-boot.version>
+
+		<!-- Version for Jackson 3 (added via dependency management)-->
+		<jackson3-version>3.0.4</jackson3-version>
+		<jackson2-version>2.21.0</jackson2-version>
+
+		<!-- Version for JUnit (added via dependency management) -->
+		<junit.version>5.13.4</junit.version>
+
+
+		<!-- 
+		*****************************************************************************************************************
+		*																												*
+		*	Properties to activate profiles																				*
+		*																												*
+		*****************************************************************************************************************
+		-->
+		<!--
+			Property can be used to activate Maven profile automatically that runs code generation directly from a given
+			XMI file.
+		-->
+		<runCodeGenerationFromXMIFile>false</runCodeGenerationFromXMIFile>
+		
+		<!--
+			Property can be used to activate Maven profile automatically that runs code generation directly from a given 
+			XMI file.
+		-->
+		<runCodeGenerationFromModelArtifact>false</runCodeGenerationFromModelArtifact>
+
+
+		<!-- 
+		*****************************************************************************************************************
+		*																												*
+		*	General properties to configure JEAF Generator																*
+		*																												*
+		*****************************************************************************************************************
+		-->
+		
+		<!--
+			UML Modeling Tool that was used to create the UML Model. By default it is assumed that MagicDraw UML was used.
+	
+			Supported values are (case sensitive): MAGIC_DRAW, ECLIPSE_PAPYRUS, OTHER
+		-->
+		<umlModelingTool>MAGIC_DRAW</umlModelingTool>
+
+		<!--
+			Parameter defines the type of Enterprise Java that should be used for code generation.
+			
+			Supported values are: JAVA_EE, JAKARTA_EE
+		-->
+		<enterpriseJavaType>JAKARTA_EE</enterpriseJavaType>
+
+		<!--
+			Directory which contains all XMI files. The files have to be exported from MagicDraw UML using its Eclipse UML2
+			Export v2.x (File - Export To - Eclipse UML2 (v2.0x) XMI File)
+		-->
+		<xmiDirectory></xmiDirectory>
+
+		<!--
+			Group ID of the artifact that contains the XMI files of the UML model.
+			
+			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
+			referencing an artifact that contains the XMI files.
+		-->
+		<modelArtifactGroupID></modelArtifactGroupID>
+
+		<!--
+			Artifact ID of the artifact that contains the XMI files of the UML model.
+			
+			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
+			referencing an artifact that contains the XMI files.
+		-->
+		<modelArtifactArtifactID></modelArtifactArtifactID>
+
+		<!--
+			XMI Path inside the artifact that contains the XMI files of the UML model.
+		-->
+		<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
+
+		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
+		<umlPackage></umlPackage>
+
+		<!--
+			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
+			name of the file has to be provided as we assume that the file is located in the XMI directory.
+		-->
+		<umlModelFile></umlModelFile>
+
+		<!--
+			In addition to standard profile of JEAF Generator it is also possible to add a custom profile that contains your
+			own stereotypes.
+		-->
+		<customProfileFile></customProfileFile>
+
+		<!--
+			Name of the root template for customer specific extensions
+		-->
+		<customRootTemplate></customRootTemplate>
+
+		<!--
+			List of custom check files that will be used to run customer specific checks of the UML model.
+		-->
+		<customCheckFiles></customCheckFiles>
+
+		<!--
+			By default custom templates are only executed in case that also default templates are executed. Using this switch
+			is it also possible to only execute custom templates.
+		-->
+		<enforceCustomTemplateExecution>false</enforceCustomTemplateExecution>
+
+		<!--
+		   * Directory where all files that belong to the "src" directory will be written to.
+		  -->
+		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+
+		<!--
+			Directory where all files that belong to the "src-gen" directory will be written to.
+		-->
+		<sourceGenDirectory>${project.basedir}/src-gen/main/java</sourceGenDirectory>
+
+		<!--
+			Parameter defines if src-gen directory should be cleaned before the generator runs. Cleaning means that all
+			existing files will be deleted. Cleaning src-gen directory is the proposed way to go.
+		-->
+		<cleanSourceGen>true</cleanSourceGen>
+
+		<!--
+			Directory where all files that belong to the "res" directory will be written to.
+		-->
+		<resourceDirectory>${project.basedir}/src/main/resources</resourceDirectory>
+
+		<!--
+			Directory where all files that belong to the "res-gen" directory will be written to.
+		-->
+		<resourceGenDirectory>${project.basedir}/src-gen/main/resources</resourceGenDirectory>
+
+		<!--
+			Parameter defines if res-gen directory should be cleaned before the generator runs. Cleaning means that all
+			existing files will be deleted. Cleaning res-gen directory is the proposed way to go.
+		-->
+		<cleanResourceGen>true</cleanResourceGen>
+
+		<!--
+			Directory where all files that belong to the "src-test" directory will be written to.
+		-->
+		<sourceTestDirectory>${project.basedir}/src/test/java</sourceTestDirectory>
+
+		<!--
+			Directory where all files that belong to the "src-test-gen" directory will be written to.
+		-->
+		<sourceTestGenDirectory>${project.basedir}/src-gen/test/java</sourceTestGenDirectory>
+
+			<!--
+				Parameter defines if src-test-gen directory should be cleaned before the generator runs. Cleaning means that all
+				existing files will be deleted. Cleaning src-gen directory is the proposed way to go.
+			-->
+		<cleanSourceTestGen>true</cleanSourceTestGen>
+
+		<!--
+			Directory where all files that belong to the "res-test" directory will be written to.
+		-->
+		<resourceTestDirectory>${project.basedir}/src/test/resources</resourceTestDirectory>
+
+		<!--
+			Directory where all files that belong to the "res-test-gen" directory will be written to.
+		-->
+		<resourceTestGenDirectory>${project.basedir}/src-gen/test/resources</resourceTestGenDirectory>
+
+		<!--
+			Parameter defines if res-test-gen directory should be cleaned before the generator runs. Cleaning means that all
+			existing files will be deleted. Cleaning res-gen directory is the proposed way to go.
+		-->
+		<cleanResourceTestGen>true</cleanResourceTestGen>
+
+		<!--
+			Switch can be used to activate so called multi-module workflow. This mode is intended to be used for Maven
+			multi-module projects. In such cases the check of the UML model will be done only once in order to improve overall
+			performance of the Maven build.
+		-->
+		<useMultiModuleWorkflow>true</useMultiModuleWorkflow>
+
+		<!--
+			Company information for header of generated files.
+		-->
+		<fileHeaderCompany>Please add organization file header by setting property "fileHeaderCompany"</fileHeaderCompany>
+
+		<!--
+			Author information for header of generated files.
+		-->
+		<fileHeaderAuthor>JEAF Generator</fileHeaderAuthor>
+
+		<!--
+			Copyright information for header of generated files.
+		-->
+		<fileHeaderCopyright>All rights reserved.</fileHeaderCopyright>
+
+		<!--
+			Version information for header of generated files.
+		-->
+		<fileHeaderVersion></fileHeaderVersion>
+
+		<!--
+			Parameter can be used to disable formatting of generated sources and resources in general.
+		-->
+		<disableFormatting>false</disableFormatting>
+
+		<!--
+			Parameter can be used to disable formatting of generated sources only.
+		-->
+		<disableSourceFormatting>false</disableSourceFormatting>
+
+		<!--
+			Parameter can be used to disable formatting of generated resources only.
+		-->
+		<disableResourceFormatting>false</disableResourceFormatting>
+
+		<!--
+			Reference to the file that contains the code style definition for Java code. If it is not defined then the default
+			code style will be used.
+		-->
+		<javaFormatterStyleFile>anaptecs_code_guideline.xml</javaFormatterStyleFile>
+
+		<!--
+			Reference to the file that contains the code style definition for XML. If it is not defined then the default code
+			style will be used.
+		-->
+		<xmlFormatterStyleFile>anaptecs_xml_style.properties</xmlFormatterStyleFile>
+
+		<!--
+			Parameter defines if unused imports in generated code should be removed or not. Except for cases when you run into
+			problems there is no reason to disable this feature. This feature can only be enabled if formatting of sources is
+			enabled.
+		-->
+		<removeUnusedImports>true</removeUnusedImports>
+
+		<!--
+			Parameter defines the grouping and sorting of Java import statements.
+		-->
+		<importGroups>java.,javax.,org.,com.</importGroups>
+
+		<!--
+			Parameter defines the grouping and sorting of static Java import statements.
+		-->
+		<staticImportGroups>java,*</staticImportGroups>
+
+		<!--
+			Switch defines if errors during code generation should break the build. This feature is mainly intended for test
+			purposes of JEAF Generator itself.
+		-->
+		<breakBuildOnGeneratorError>true</breakBuildOnGeneratorError>
+
+		<!--
+			When working with soft links it might be a requirement to append a suffix to the name of a property from the UML
+			model. This can be done using this configuration parameter.
+		-->
+		<softLinkSuffix></softLinkSuffix>
+
+		<!--
+			Parameter can be used to provide the publishing date of the next major version of an API. This date will used be to
+			identify which deprecation will be removed / breaking changes will become active with the next major version.
+		-->
+		<nextMajorReleasePublishingDate></nextMajorReleasePublishingDate>
+
+		<!--
+			Parameter can be used to provide the version number of the next major version of an API.
+		-->
+		<nextMajorReleaseVersion></nextMajorReleaseVersion>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties that control code generation for POJOs															*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			Switch defines whether POJO's should be generated or not.
+		-->
+		<generatePOJOs>false</generatePOJOs>
+	
+		<!--
+			By default JEAF Generator does not allow type wildcards for classes using Java Generics. If you enable this switch
+			then that there is no actual type defined in a template binding in the UML model then type wildcard <?> will be 
+			used.
+		-->
+		<allowTypeWildcardsForGenerics>false</allowTypeWildcardsForGenerics>
+
+		<!--
+			Switch defines if equals(...) and hashCode() should be generated for all variants of POJOs
+		-->
+		<generateEqualsAndHashCode>true</generateEqualsAndHashCode>
+
+		<!--
+			Switch defines if equals(...) and hashCode() should be generated for "normal" POJOs.
+		 -->
+		<generateEqualsAndHashCodeForStandardClasses>false</generateEqualsAndHashCodeForStandardClasses>
+
+		<!--
+			Switch defines if equals(...) and hashCode() should be generated for composite data type POJOs.
+		-->
+		<generateEqualsAndHashCodeForCompositeDataTypes>false</generateEqualsAndHashCodeForCompositeDataTypes>
+
+		<!--
+			Switch defines if equals(...) and hashCode() should be generated for OpenAPI data type POJOs.
+		-->
+		<generateEqualsAndHashCodeForOpenAPIDataTypes>false</generateEqualsAndHashCodeForOpenAPIDataTypes>
+
+		<!--
+			Switch defines if {@link Comparable} should be implemented by classes that are marked as OpenAPIDataTypes.
+		-->
+		<implementComparableForOpenAPIDataTypes>true</implementComparableForOpenAPIDataTypes>
+
+		<!--
+			Switch defines whether POJO's should be serializable or not.
+		-->
+		<makePOJOsSerializable>false</makePOJOsSerializable>
+
+		<!--
+			Switch defines whether generated POJO's and / or ServiceObjects should be immutable. This switch is set to true
+			then it will overrule settings from the UML model.
+		-->
+		<generateImmutableClasses>true</generateImmutableClasses>
+
+			<!--
+			Switch defines if an of(...) operation should be generated for POJOs or ServiceObjects. This switch	does not have any 
+			impact on so called OpenAPI Data Type. POJOs / ServiceObjects that are also modeled to be an Data Type will not have 
+			an of(...) operation. Instead please use configured parameter #generateOfOperationForOpenAPIDataType.
+		  -->
+		<generateOfOperation>false</generateOfOperation>
+
+		<!--
+			Switch defines if an of(...) operation should be generated for OpenAPI Data Types. This switch does	not have any impact
+			on so standard POJOs / ServiceObjects. For them no of(...) operation will be generated. Instead please use configured 
+			parameter #generateOfOperation.
+		-->
+		<generateOfOperationForOpenAPIDataType>true</generateOfOperationForOpenAPIDataType>
+
+		<!--
+			Switch can be used to enforce that for optional primitive properties / parameters an explicit default value is
+			defined in the UML model.
+		-->
+		<enforceExplicitDefaultValueForOptionalPrimitives>true</enforceExplicitDefaultValueForOptionalPrimitives>
+
+		<!--
+			Switch defines if a detailed toString() method should be generated for POJOs, ServiceObjects and DomainObjects.
+			"Detailed" here means that besides the attributes of an class also references to other objects and arrays with be
+			present in result of toString().
+		-->
+		<enableDetailedToStringMethod>true</enableDetailedToStringMethod>
+
+	<!--
+			Switch defines whether custom constraints should be generated.
+		-->
+		<generateCustomConstraints>false</generateCustomConstraints>
+
+		<!--
+			Switch enables usage of so called generic builder pattern, which solves several problems especially in the area of
+			inheritance and builders.
+		-->
+		<useGenericBuilderPattern>true</useGenericBuilderPattern>
+
+		<!--
+			Switch enables that JEAF Generator generates a builder(...) method that directly contains all mandatory fields.
+		-->
+		<generateBuilderWithAllMandatoryFields>false</generateBuilderWithAllMandatoryFields>
+
+		<!--
+			Switch defines if object validation should be generated in build() operation of the class builder. If it is enabled
+			then the generated code will have a dependency on one of the following artifacts:
+			
+			Spring Boot:
+			
+				<dependency>
+					<groupId>com.anaptecs.jeaf.validation</groupId>
+					<artifactId>jeaf-validation-api-spring</artifactId>
+					<version>${1.6.0 or higher}</version>
+				</dependency>
+		   *
+		   * Depending on the implementation of class <code>com.anaptecs.jeaf.validation.api.ValidationExecutor</code> if might
+		   * still be possible to disable / enable request validation without changing the code.
+		-->
+		<generateObjectValidationInBuilder>false</generateObjectValidationInBuilder>
+
+		<!--
+			Switch enables the JEAF Generator legacy style for builder pattern in generated code. If the flag is enabled then
+			static builder methods will also be generated on the builder class itself no only on its surrounding class.
+		-->
+		<enableLegacyBuilderStyle>false</enableLegacyBuilderStyle>
+
+		<!--
+			When working with soft links in your UML model then you can define there that a custom generic type should be used
+			for the soft link. The concrete java type (its fully qualified class name) that should be used can be defined
+			through this parameter.
+		-->
+		<javaGenericSoftLinkType></javaGenericSoftLinkType>
+
+			<!--
+			Switch can be used to define if a soft link suffix should be used when for generated Java code.
+		-->
+		<useSoftLinkSuffixInJava>false</useSoftLinkSuffixInJava>
+
+		<!--
+			Switch defines if Java Validation Annotation @Valid will be generated for all references to POJOs, ServiceObjects,
+			DomainObjects and PersistentObjects even in cases when it is not defined in the UML model.
+		-->
+
+		<generateValidAnnotationForAssociations>true</generateValidAnnotationForAssociations>
+	
+		<!--
+			Switch defines whether Java Validation Annotations should not only be generated for explicitly modeled annotations
+			but also from multiplicity of modeled attributes.
+		-->
+		<generateValidationAnnotationsForAttributesFromMultiplicity>true</generateValidationAnnotationsForAttributesFromMultiplicity>
+
+		<!--
+			Switch defines whether Java Validation Annotations should not only be generated for explicitly modeled annotations
+			but also from multiplicity of modeled associations.
+		-->
+		<generateValidationAnnotationsForAssociationsFromMultiplicity>true</generateValidationAnnotationsForAssociationsFromMultiplicity>
+
+		<!--
+			Switch can be used to enable that @NotNull annotation is generated for setter and getter of single valued 
+			properties.
+		-->
+		<generateNotNullAnnotationForSingleValuedProperties>false</generateNotNullAnnotationForSingleValuedProperties>
+
+		<!--
+			Parameter defines the name of the NotNull annotation that should be used for single value properties.
+		-->
+		<notNullAnnotationNameForSingleValuedProperties>jakarta.annotation.Nonnull</notNullAnnotationNameForSingleValuedProperties>
+
+		<!--
+			Switch can be used to enable that NotEmpty annotation is generated for setter and getter of multi
+			valued properties.
+		-->
+		<generateNotEmptyAnnotationForMultiValuedProperties>false</generateNotEmptyAnnotationForMultiValuedProperties>
+
+		<!--
+			Parameter defines the name of the NotEmpty annotation that should be used for multi value properties.
+		-->
+		<notEmptyAnnotationNameForMultiValuedProperties>jakarta.annotation.Nonnull</notEmptyAnnotationNameForMultiValuedProperties>
+
+		<!--
+			Switch can be used to enable that NotNull annotation is generated for service operations.
+		-->
+		<generateNotNullAnnotationForSingleValuedServiceParameters>false</generateNotNullAnnotationForSingleValuedServiceParameters>
+
+		<!--
+			Parameter defines the name of the NotNull annotation that should be used for for service operations.
+		-->
+		<notNullAnnotationNameForSingleValuedServiceParameters>jakarta.annotation.Nonnull</notNullAnnotationNameForSingleValuedServiceParameters>
+
+		<!--
+			Switch can be used to enable that NotEmpty annotation is generated for service operations.
+		-->
+		<generateNotEmptyAnnotationForMultiValuedServiceParameters>false</generateNotEmptyAnnotationForMultiValuedServiceParameters>
+
+		<!--
+			Parameter defines the name of the NotEmpty annotation that should be used for service operations.
+		-->
+		<notEmptyAnnotationNameForMultiValuedServiceParameters>jakarta.annotation.Nonnull</notEmptyAnnotationNameForMultiValuedServiceParameters>
+
+		<!--
+			Switch can be used to enable that NotEmpty</code> annotation is generated for REST resources.
+		  -->
+		<generateNotNullAnnotationForSingleValuedRESTParameters>false</generateNotNullAnnotationForSingleValuedRESTParameters>
+
+		<!--
+			Parameter defines the name of the <code>NotEmpty</code> annotation that should be used for REST resources.
+		-->
+		<notNullAnnotationNameForSingleValuedRESTParameters>jakarta.annotation.Nonnull</notNullAnnotationNameForSingleValuedRESTParameters>
+
+		<!--
+			Switch can be used to enable that <code>NotEmpty</code> annotation is generated for for REST resources.
+		-->
+		<generateNotEmptyAnnotationForMultiValuedRESTParameters>false</generateNotEmptyAnnotationForMultiValuedRESTParameters>
+
+		<!--
+			Parameter defines the name of the <code>NotEmpty</code> annotation that should be used for REST resources.
+		-->
+		<notEmptyAnnotationNameForMultiValuedRESTParameters>jakarta.annotation.Nonnull</notEmptyAnnotationNameForMultiValuedRESTParameters>
+
+		<!--
+			Switch defines if extensible enums should be generated in light-weight or heavy-weight style.
+		-->
+		<generateHeavyExtensibleEnums>false</generateHeavyExtensibleEnums>
+
+		<!--
+			Switch defines if only the public view of POJO's or ServiceObjects should be generated. This will lead to generated
+			classes where some internal structures of a POJO / ServiceObject will be hidden to the outside world.
+		-->
+		<generatePublicObjectView>false</generatePublicObjectView>
+
+		<!--
+			Switch defines whether the generated set methods for one-to-many associations should be public or not.
+		-->
+		<generatePublicSettersForAssociations>false</generatePublicSettersForAssociations>
+
+		<!--
+			Switch defines whether the generated set methods for to-one associations has checks for null values of parameters.
+		-->
+		<generateNullChecksForToOneAssociations>false</generateNullChecksForToOneAssociations>
+
+		<!--
+			Switch defines if arrays should only be generated for primitive types.
+			
+			If set to false then arrays are used in case of multivalued properties and Collections only for associations in the 
+			model.
+		-->
+		<useArraysOnlyForPrimitives>true</useArraysOnlyForPrimitives>
+
+		<!--
+			Switch can be used to disable generation of save copy of collections inside builders. By default, in builders there
+			collections will be copied to strictly ensure that internal data structures of an object can not be edited from
+			outside. However, this behavior also leads to additional garbage. Using this switch it is possible to disable the
+			save copy mechanism for collections inside setters for collections.
+		-->
+		<disableSaveCopyOfCollectionsInBuilders>false</disableSaveCopyOfCollectionsInBuilders>
+
+		<!--
+			Switch defines whether generated methods dealing with any kind of collections must ensure that the internal state
+			of an object can not be modified by accident. This will lead to get method that make use of
+			Collections.unmodifiableCollection(...). Builders that receive a collection as input will copy their content. This
+			is the default behavior of JEAF Generator.
+			
+			If this parameter is set to true then this means that collections returned from a get method may also
+			be modified from the outside.
+		-->
+		<disableImmutabilityOfCollections>false</disableImmutabilityOfCollections>
+
+		<!--
+			Switch defines whether generated methods dealing with arrays must ensure that the internal state of an object can
+			not be modified by accident. This will lead to System.arraycopy(...) in get methods. Builders that receive an array
+			as input will copy their content. This is the default behavior of JEAF Generator.
+			
+			If this parameter is set to <code>true</code> then this means that arrays return from get method can directly be
+			modified and this will also impact the state of the object were the array belongs to.
+		-->
+		<disableImmutabilityOfArrays>false</disableImmutabilityOfArrays>
+
+		<!--
+			Switch defines whether generated methods dealing with byte arrays must ensure that the internal state of an object
+			can not be modified by accident. This will lead to System.arraycopy(...) in get methods. Builders that receive an
+			array as input will copy their content. This is the default behavior of JEAF Generator.
+			
+			If this parameter is set to <code>true</code> then this means that arrays return from get method can directly be
+			modified and this will also impact the state of the object were the array belongs to.
+		-->
+		<disableImmutabilityOfBinaryData>false</disableImmutabilityOfBinaryData>
+
+		<!--
+			Parameter can be used to add @Generated annotation to generated code.
+		-->
+		<addGeneratedAnnotation>false</addGeneratedAnnotation>
+
+		<!--
+			Parameter can be used to also add timestamp of code generation to the @Generated annotation. Parameter is only
+			relevant if <code>addGeneratorAnnotation</code> is set to <code>true</code>.
+		-->
+		<addGenerationTimestamp>false</addGenerationTimestamp>
+
+		<!--
+			Parameter can be used to also add the defined comment of code generation to the @Generated annotation. Parameter is
+			only relevant if addGeneratorAnnotation is set to true.
+		-->
+		<generationComment></generationComment>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties that have impact on code generation for Jackson													*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			Switch defines whether Jackson annotations for JSON serialization should be generated or not.
+		-->
+		<generateJacksonAnnotations>true</generateJacksonAnnotations>
+
+		<!--
+			Parameter defines if JSON serializers should be generated.
+		-->
+		<generateJSONSerializers>false</generateJSONSerializers>
+
+		<!--
+			Parameter can be used to define for which Jackson versions annotations, serializers, modules etc. should be
+			generated.
+			
+			By default only code for Jackson 3 will be generated. Please be aware that it is possible to generate code for
+			Jackson 2 and 3 within the same Maven module.
+		-->
+		<jacksonVersions>JACKSON_3</jacksonVersions>
+
+		<!--
+			Parameter can be used to define a suffix for generated Jackson 2 specific classes.<br>
+			
+			In order to ensure backward compatibility with current generated code for Jackson 2 there is no suffix by default.
+			
+			Please be aware that in case that you want to use Jackson 2 and 3 in parallel for at least one of them a suffix or
+			sub-package needs to be defined.<br>
+			
+			Please also see:
+				#jackson2Subpackage
+				#jackson3Suffix
+				#jackson3Subpackage
+		-->
+		<jackson2Suffix></jackson2Suffix>
+
+		<!--
+			Parameter can be used to define a sub package where all Jackson 2 specific classes will be located.<br>
+			
+			Please be aware that in case that you want to use Jackson 2 and 3 in parallel for at least one of them a suffix or
+			sub package needs to be defined.<br>
+			
+			Please also see:
+				#jackson2Suffix
+				#jackson3Suffix
+				#jackson3Subpackage
+		-->
+		<jackson2Subpackage></jackson2Subpackage>
+
+		<!--
+			Parameter can be used to define a suffix for generated Jackson 3 specific classes.<br>
+			
+			By default no suffix is used as suffix.<br>
+			
+			Please be aware that in case that you want to use Jackson 2 and 3 in parallel for at least one of them a suffix or
+			sub-package needs to be defined.<br>
+			
+			Please also see:
+				#jackson2Suffix
+				#jackson2Subpackage
+				#jackson3Subpackage
+		-->
+		<jackson3Suffix></jackson3Suffix>
+
+		<!--
+			Parameter can be used to define a sub package where all Jackson 2 specific classes will be located.<br>
+			
+			Please be aware that in case that you want to use Jackson 2 and 3 in parallel for at least one of them a suffix or
+			sub-package needs to be defined.<br>
+			
+			Please also see:
+				#jackson2Suffix
+				#jackson2Subpackage
+				#jackson3Suffix
+		-->
+		<jackson3Subpackage></jackson3Subpackage>
+
+		<!--
+			Switch is used to generate @JsonAutoDetect annotation directly on generated classes. This annotation is required
+			for proper JSON serialization of POJOs and ServiceObjects. However, by default it is assumed that this
+			configuration is done on the Jackson ObjectMapperFactory. If you prefer to have it directly on the generated
+			classes for whatever reason then you need to set this parameter to <code>true</code>.
+			
+			This switch only is active in combination with {@link #generateJacksonAnnotations}.
+		-->
+		<generateJSONAutoDetectAnnotationOnClass>false</generateJSONAutoDetectAnnotationOnClass>
+
+		<!--
+			Switch can be used to add @JsonSetter annotation on every set operation of a builder.
+		-->
+		<generateJsonSetterAnnotationOnBuilderOperations>true</generateJsonSetterAnnotationOnBuilderOperations>
+
+		<!--
+			Parameter defines if generated code for JSON serialization should be SemVer compliant or not.
+		-->
+		<enableSemVerForJSON>true</enableSemVerForJSON>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties that have impact on code generation for Services / REST											*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			Switch defines whether service interfaces (non-reactive) should be generated or not.
+		-->
+		<generateServiceInterfaces>false</generateServiceInterfaces>
+
+		<!--
+			Switch can be used to generate reactive service interfaces.<br>
+			
+			Please be aware that generated code will have dependency on library <b><code>Reactor Code</code></b>. <br>
+			
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+			<dependency>
+		-->
+		<generateReactiveServiceInterfaces>false</generateReactiveServiceInterfaces>
+
+		<!--
+			Switch defines whether REST resources should be generated or not.
+		-->
+		<generateRESTResources>false</generateRESTResources>
+
+		<!--
+			Switch can be used to generate reactive Spring REST Controllers.<br>
+			
+			Please be aware that generated code will have dependency on library <b><code>Reactor Code</code></b>. <br>
+			
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+			</dependency>
+		-->
+		<generateReactiveRESTResources>false</generateReactiveRESTResources>
+
+		<!--
+			Parameter can be used to define the target runtime environment for which code should be generated. Currently JEAF
+			and Spring are supported. Valid values are (case-sensitive): "JEAF", "JAVA" and "SPRING"
+		-->
+		<targetRuntime>SPRING</targetRuntime>
+
+		<!--
+			REST Library that is the target for code generation. Depending on the target runtime either JAX-RS (Java and JEAF)
+			or SPRING_WEB_MVC (Spring) is used as default.
+			
+			Supported values are (case sensitive): JAX_RS, SPRING_WEB_MVC
+		-->
+		<restLibrary>SPRING_WEB_MVC</restLibrary>
+
+		<!--
+			Switch defines whether JAX-RS annotations should be generated or not.
+		-->
+		<generateJAXRSAnnotations>false</generateJAXRSAnnotations>
+
+		<!--
+			Switch defines if target runtime specific security annotations (e.g. @RolesAllowed from JSR-250 or @PreAuthorize
+			from Spring Security) should be generated or not.
+		-->
+		<generateSecurityAnnotation>false</generateSecurityAnnotation>
+
+		<!--
+			Parameter can be used to define a default security role. If defined this default security role will be used
+			whenever no explicit role is defined for an operation / REST resource.
+		-->
+		<defaultSecurityRoleName>NOT_AUTHORIZED</defaultSecurityRoleName>
+
+		<!--
+			Switch defines if request validation for REST Resources / Controllers or REST Clients (aka REST Service Proxies)
+			should be generated. If it is enabled then the generated code will have a dependency on one of the following
+			artifacts:
+			
+			Spring Boot:
+				<dependency>
+					<groupId>com.anaptecs.jeaf.validation</groupId>
+					<artifactId>jeaf-validation-api-spring</artifactId>
+					<version>${1.6.0 or higher}</version>
+				</dependency>
+			
+			Depending on the implementation of class <code>com.anaptecs.jeaf.validation.api.ValidationExecutor</code> it might
+			still be possible to disable / enable request validation without changing the code.
+		-->
+		<generateRESTRequestValidation>true</generateRESTRequestValidation>
+
+		<!--
+			Switch defines if request validation for REST Resources / Controllers or REST Clients (aka REST Service Proxies)
+			should be generated. If it is enabled then the generated code will have a dependency on one of the following
+			artifacts:
+			
+			Spring Boot:
+			
+				<dependency>
+					<groupId>com.anaptecs.jeaf.validation</groupId>
+					<artifactId>jeaf-validation-api-spring</artifactId>
+					<version>${1.6.0 or higher}</version>
+				</dependency>
+			
+			Depending on the implementation of class <code>com.anaptecs.jeaf.validation.api.ValidationExecutor</code> if might
+			still be possible to disable / enable response validation without changing the code.
+		-->
+		<generateRESTResponseValidation>true</generateRESTResponseValidation>
+
+		<!--
+			Switch defines whether custom headers of a REST resource should be filtered or not. Default is <code>true</code>.
+			If custom header filtering is defined then a {@link com.anaptecs.jeaf.rest.resource.api.CustomHeaderFilter} has to
+			be provided via configuration.
+			
+			It's strongly recommended to not use custom headers at all. However, if needed then at least they should be
+			filtered.
+		-->
+		<filterCustomHeaders>true</filterCustomHeaders>
+
+		<!--
+			Parameter defines the prefix that should be used for REST paths of generated REST resources / controllers. The
+			value provided here will be used as prefix. To be a valid path it has to start with '/' and must not end with '/'.
+		-->
+		<restPathPrefix></restPathPrefix>
+
+		<!--
+			Parameter can be used to define the default http status code that should be used when REST requests are successful.
+			By default 200 ("OK") is used. This value will only be used if there is no explicit status code defined on the
+			RESTOperation.
+		-->
+		<restDefaultSuccessStatusCode>200</restDefaultSuccessStatusCode>
+
+		<!--
+			Parameter can be used to define the default http status code that should be used when REST requests are successful
+			for operations with return type void. By default 204 ("NO_CONTENT") is used. This value will only be used if there
+			is no explicit status code defined on the RESTOperation.
+		-->
+		<restDefaultVoidStatusCode>204</restDefaultVoidStatusCode>
+
+		<!--
+			Switch defines whether REST service proxies should be generated or not.
+		-->
+		<generateRESTServiceProxies>false</generateRESTServiceProxies>
+
+		<!--
+			Switch defines whether reactive REST service proxies should be generated or not.<br>
+			
+			Please be aware that generated code will have dependency on library <b><code>Reactor Code</code></b>. <br>
+			
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+			</dependency>
+		-->
+		<generateReactiveRESTServiceProxies>false</generateReactiveRESTServiceProxies>
+
+		<!--
+			Switch defines whether a default config file for REST service proxies should be generated or not.
+		-->
+		<generateRESTServiceProxyConfigFile>false</generateRESTServiceProxyConfigFile>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties that configure generation of OpenAPI specifications												*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			Switch defines whether an OpenAPI specification should be generated or not.
+		-->
+		<generateOpenAPISpec>false</generateOpenAPISpec>
+
+		<!--
+			Switch defines if when an OpenAPI specification is generated then also its dependent specification should be
+			generated independent of the generator white list.
+		-->
+		<generateDependentOpenAPISpecs>true</generateDependentOpenAPISpecs>
+
+		<!--
+			Switch defines if dependencies from a OpenAPI specification to another one should be treated as transitive or not.
+			By default only explicit dependencies are taken into account.
+			
+			However, this is a contradiction to e.g. to Maven where dependencies are always transitive. If you want JEAF
+			Generator to do so as well then you need to set this switch to <code>true</code>.
+		-->
+		<useTransitiveOpenAPIDependencies>true</useTransitiveOpenAPIDependencies>
+
+		<!--
+			By default JEAF Generator runs a dependency check for OpenAPI specifications to ensure that all types that are
+			referenced from another OpenAPI spec can be resolved. If you want to disable these checks for whatever reason you
+			can set this switch to <code>true</code>.
+		  -->
+		<disableOpenAPIDependencyChecks>false</disableOpenAPIDependencyChecks>
+
+		<!--
+			Switch defines if a generated OpenAPI specification should be validated.
+		-->
+		<validateOpenAPISpec>true</validateOpenAPISpec>
+
+		<!--
+			Switch defines if during the validation process for OpenAPI specs not only the spec file itself but also all
+			referenced files should be validated. By default this is enabled to ensure a valid chain of OpenAPI specs.<br>
+			
+			However, this also requires that not only the generated OpenAPI spec but also all directly and indirectly
+			referenced ones are available on the file system for validation. Due to that it is possible to disable check of
+			referenced spec files.
+		-->
+		<validateReferencedOpenAPISpecs>true</validateReferencedOpenAPISpecs>
+
+		<!--
+			Parameter defines which OpenAPI version is used when generating OpenAPI specifications. As there are breaking
+			changes between OpenAPI 3.0 and 3.1 unfortunately it is required to define that as part of the Maven build.
+			Depending on the OpenAPI version different checks on the model have to be applied. <br>
+			
+			Breaking changes between OpenAPI 3.0 and 3.1 are described here:
+			https://www.openapis.org/blog/2021/02/16/migrating-from-openapi-3-0-to-3-1-0
+			
+			Even though OpenAPI was released already some tme ago, tool support is still rather poor. In order to have better 
+			interoperability we thus still stick to OpenAPI 3.0. However, if you prefer you can switch to version 3.1. From UML 
+			model / JEAF Generator perspective it makes no difference.
+		-->
+		<openAPIVersion>OPEN_API_3_0</openAPIVersion>
+
+		<!--
+			Parameter can be used to define a default path for the location of OpenAPI specification in case that they are
+			referenced from another OpenAPI spec. Settings this parameter is equivalent to setting 
+			OpenAPISpecReference.location. Default location will only be used in case that nothing is defined in
+			the UML model explicitly.
+		-->
+		<openAPISpecReferenceDefaultLocation>./</openAPISpecReferenceDefaultLocation>
+
+		<!--
+			When working with soft links in your UML model then you can define there that a custom generic type should be used
+			for the soft link. The concrete OpenAPI type that should be used can be defined through this parameter.
+			
+			In case that the parameter is not defined then it is assumed that the softlink is a string type in OpenAPI.
+			
+			In case that the type is defined within the same OpenAPI spec then local naming should be used. If type is defined
+			within another OpenAPI spec the standard naming for external types should be used.
+			
+			Examples:
+				#/components/schemas/Softlink</code>
+				../base/product-base.yml#/components/schemas/Softlink</code>
+		-->
+		<openAPIGenericSoftLinkType></openAPIGenericSoftLinkType>
+
+		<!--
+			Switch can be used to define if a soft link suffix should be used in OpenAPI.
+		-->
+		<useSoftLinkSuffixInOpenAPI>false</useSoftLinkSuffixInOpenAPI>
+
+		<!--
+			Configuration parameter allows to define the YAML multi line comment style that is used within the generated
+			OpenAPI specification. For further information about the various options please refer to:
+			https://yaml-multiline.info/
+			
+			By default <code>'|'</code> is used which means that new lines will be kept and that there will be a single new
+			line at the end of each comment.
+		-->
+		<openAPICommentStyle>|</openAPICommentStyle>
+
+		<!--
+			Configuration parameter allows to define an explicit quotation character for literals in OpenAPI specifications.
+			
+			By default no quotation is used.
+		-->
+		<openAPILiteralQuotationCharacter></openAPILiteralQuotationCharacter>
+
+		<!--
+			Configuration parameter allows to define an explicit quotation character for example values in OpenAPI
+			specifications.
+			
+			By default no quotation is used.
+			
+			Please be aware that quoting examples is not necessary except for rare cases. So instead of enabling it in general
+			it's recommended to use quotes only in cases were it is really required.
+		-->
+		<openAPIExampleQuotationCharacter></openAPIExampleQuotationCharacter>
+
+		<!--
+			Switch can be used to suppress technical http headers in generated Java code.
+		-->
+		<suppressTechnicalHeaders>false</suppressTechnicalHeaders>
+
+		<!--
+			Switch defines whether YAML 1.1 compatibility mode for OpenAPI should be enabled. In YAML 1.1 there is a big
+			difference compared to YAML 1.2 when it comes to boolean values. In YAML 1.1 besides <code>true</code> and
+			<code>false</code> also <code>yes</code>, <code>no</code>, <code>y</code>, <code>n</code>, <code>on</code> and
+			<code>off</code> are treated as boolean values. This might lead to ugly situation when tools or applications are
+			still working with YAML 1.1 based parsers. To prevent such trouble it is possible to tell JEAF generator that in
+			such cases these values should be quoted.
+			
+			Also see: https://stackoverflow.com/questions/61157594/why-does-swagger-codegen-convert-an-on-off-string-enum-to-true-false
+		  -->
+		<enableYAML11Compatibility>false</enableYAML11Compatibility>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI contact name. The provided value will only be used if
+			none is explicitly defined in the UML model.
+		-->
+		<openAPIContactName></openAPIContactName>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI contact URL. The provided value will only be used if none
+			is explicitly defined in the UML model.
+		-->
+		<openAPIContactURL></openAPIContactURL>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI contact email. The provided value will only be used if
+			none is explicitly defined in the UML model.
+		-->
+		<openAPIContactEmail></openAPIContactEmail>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI license name. The provided value will only be used if
+			none is explicitly defined in the UML model.
+		-->
+		<openAPILicenseName></openAPILicenseName>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI license URL. The provided value will only be used if none
+			is explicitly defined in the UML model.
+		-->
+		<openAPILicenseURL></openAPILicenseURL>
+
+		<!--
+			Configuration parameter can be used to define the OpenAPI terms of use URL. The provided value will only be used if
+			none is explicitly defined in the UML model.
+		-->
+		<openAPITermsOfUseURL></openAPITermsOfUseURL>
+
+		<!--
+			OpenAPI standard defines that for whatever reason some header fields should not be mentioned in the OpenAPI
+			specification e.g. 'Authorization' header. However from an overall perspective it still might make sense to
+			explicitly show the for better documentation purposes. This can be done by setting this property to true.
+			
+			Also see: https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md#parameterObject
+		-->
+		<addIgnoredHeadersToOpenAPISpec>false</addIgnoredHeadersToOpenAPISpec>
+
+		<!--
+			Parameter can be used to suppress link to model element in generated OpenAPI specification. By default fully
+			qualified name of the type is added as comment above the type definition.
+		-->
+		<suppressClassNameCommentInOpenAPISpec>false</suppressClassNameCommentInOpenAPISpec>
+
+		<!--
+			Parameter can be used to suppress nullable information in generated OpenAPI specs if it is not required
+			nullable = true is default).
+		-->
+		<suppressNotRequiredNullableInOpenAPISpec>false</suppressNotRequiredNullableInOpenAPISpec>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties that configure generation of model reports														*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			Switch enables the generation of a model types report about the model parts which are configured to be processed.
+			Types report is based an model elements that are tagged with the configured stereotypes #typesReportStereotypes.
+		-->
+		<generateTypesReport>false</generateTypesReport>
+
+		<!--
+			Title of the types report.
+		-->
+		<typesReportName></typesReportName>
+
+		<!--
+			Name of the file that contains the types report. The file extension will be chosen based on the report format.
+		-->
+		<typesReportFileName></typesReportFileName>
+
+		<!--
+			Name of the stereotypes that should be considered when creating types report. Multiple stereotypes have to be
+			separated using ';'.
+		-->
+		<typesReportStereotypes></typesReportStereotypes>
+
+		<!--
+			Switch defines if within the types report also a row for alias names should be added.
+		-->
+		<typesReportShowAlias>true</typesReportShowAlias>
+
+		<!--
+			Switch defines the name of the alias row.
+		-->
+		<typesReportAliasRowName></typesReportAliasRowName>
+
+		<!--
+			Switch defines if for types report also the package of every type should be shown.
+		-->
+		<typesReportShowPackage>true</typesReportShowPackage>
+
+		<!--
+			Switch defines if for types report also properties of every type should be added.
+		-->
+		<typesReportShowProperties>true</typesReportShowProperties>
+
+		<!--
+			Switch defines if for types report content should be grouped by package.
+		-->
+		<typesReportGroupByPackage>true</typesReportGroupByPackage>
+
+		<!--
+			Switch enables the generation of a detailed model report. A model report contains detailed information about all
+			model elements. There will be one file per package.
+		-->
+		<generateModelReport>false</generateModelReport>
+
+		<!--
+			Switch enables the generation of a breaking changes report about the model parts which are configured to be
+			processed. Breaking changes report is based an model elements that are tagged with stereotype "BreakingChange".
+		-->
+		<generateBreakingChangesReport>false</generateBreakingChangesReport>
+
+		<!--
+			Title of the breaking changes report.
+		-->
+		<breakingChangesReportName></breakingChangesReportName>
+
+		<!--
+			Name of the file that contains the breaking changes report. The file extension will be chosen based on the report
+			format.
+		-->
+		<breakingChangesReportFileName></breakingChangesReportFileName>
+
+		<!--
+			Switch defines if for breaking changes report content should be grouped by package.
+		-->
+		<breakingChangesReportGroupByPackage>true</breakingChangesReportGroupByPackage>
+
+		<!--
+			Switch enables the generation of a REST / OpenAPI deprecation report about the model parts which are configured to
+			be processed.
+		-->
+		<generateRESTDeprecationReport>false</generateRESTDeprecationReport>
+
+		<!--
+			Title of the REST deprecation report.
+		-->
+		<restDeprecationReportName></restDeprecationReportName>
+
+		<!--
+			Name of the file that contains the REST deprecation report. The file extension will be chosen based on the report
+			format.
+		-->
+		<restDeprecationReportFileName></restDeprecationReportFileName>
+
+		<!--
+			Switch enables the generation of a Java deprecation report about the model parts which are configured to be	processed.
+		-->
+		<generateJavaDeprecationReport>false</generateJavaDeprecationReport>
+
+		<!--
+			Title of the Java deprecation report.
+		-->
+		<javaDeprecationReportName></javaDeprecationReportName>
+
+		<!--
+			Name of the file that contains the Java deprecation report. The file extension will be chosen based on the report
+			format.
+		-->
+		<javaDeprecationReportFileName></javaDeprecationReportFileName>
+
+		<!--
+			Parameter defines the format of the deprecation report. Supported formats are MARKDOWN, HTML and XML.
+		-->
+		<deprecationReportFormat>MARKDOWN</deprecationReportFormat>
+
+		<!--
+			Switch enables the generation of a security roles report about the model parts which are configured to be
+			processed.
+		-->
+		<generateSecurityRolesReport>false</generateSecurityRolesReport>
+
+		<!--
+			Title of the security roles report.
+		-->
+		<securityRolesReportName></securityRolesReportName>
+
+		<!--
+			Name of the file that contains the security roles report. The file extension will be chosen based on the report
+			format.
+		-->
+		<securityRolesReportFileName></securityRolesReportFileName>
+
+		<!--
+			Parameter defines the format of the security roles report. Supported formats are MARKDOWN, HTML and XML.
+		-->
+		<securityRolesReportFormat>MARKDOWN</securityRolesReportFormat>
+
+		<!--
+			Switch can be used to list all unsecured REST endpoints in security report.
+		-->
+		<listUnsecuredRESTEndpoints>false</listUnsecuredRESTEndpoints>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties configurte JEAF Framework specifc code generation												*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+		 	Switch defines whether persistent objects should be generated or not.
+		-->
+		<generatePersistentObjects>false</generatePersistentObjects>
+
+		<!--
+			Name of the row within which the OID / primary key will be stored. If the property is not set "OID" will be used as
+			default.
+		-->
+		<peristentObjectsOIDRowName>OID</peristentObjectsOIDRowName>
+
+		<!--
+			Name of the row within which the version label of the object will be stored. The version label is used to determine
+			optimistic lock conflicts. If the property is not set "VERSION" will be used as default.
+		-->
+		<peristentObjectsVersionLabelRowName>VERSION</peristentObjectsVersionLabelRowName>
+
+		<!--
+			Switch defines whether service objects should be generated or not.
+		-->
+		<generateServiceObjects>false</generateServiceObjects>
+
+		<!--
+			Switch defines whether domain objects should be generated or not.
+		-->
+		<generateDomainObjects>false</generateDomainObjects>
+
+		<!--
+		 	Switch defines whether object mappers should be generated or not.
+		-->
+		<generateObjectMappers>false</generateObjectMappers>
+	</properties>
+
+
+	<dependencyManagement>
+		<!-- Section for custom dependency management entries -->
+		<dependencies>
+			<!--
+			*****************************************************************************************************************
+			*																												*
+			*	Dependencies for JEAF REST APIs																				*
+			*																												*
+			*****************************************************************************************************************
+			-->
+			<dependency>
+				<groupId>com.anaptecs.jeaf.rest</groupId>
+				<artifactId>jeaf-rest-composite-type-api</artifactId>
+				<version>${jeaf-rest-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.anaptecs.jeaf.rest</groupId>
+				<artifactId>jeaf-rest-request-executor-api</artifactId>
+				<version>${jeaf-rest-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.anaptecs.jeaf.rest</groupId>
+				<artifactId>jeaf-rest-request-executor-api-reactive</artifactId>
+				<version>${jeaf-rest-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.anaptecs.jeaf.rest</groupId>
+				<artifactId>jeaf-rest-resource-api</artifactId>
+				<version>${jeaf-rest-api.version}</version>
+			</dependency>
+
+			<!--
+			*****************************************************************************************************************
+			*																												*
+			*	Dependencies for JEAF Validation API																		*
+			*																												*
+			*****************************************************************************************************************
+			-->
+			<dependency>
+				<groupId>com.anaptecs.jeaf.validation</groupId>
+				<artifactId>jeaf-validation-api</artifactId>
+				<version>${jeaf-validation-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.anaptecs.jeaf.validation</groupId>
+				<artifactId>jeaf-validation-api-spring</artifactId>
+				<version>${jeaf-validation-api.version}</version>
+			</dependency>
+
+			<!--
+			*****************************************************************************************************************
+			*																												*
+			*	Dependencies for Spring Boot																				*
+			*																												*
+			*****************************************************************************************************************
+			-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!--
+			*****************************************************************************************************************
+			*																												*
+			*	Dependencies for Jackson																					*
+			*																												*
+			*****************************************************************************************************************
+			-->
+			<dependency>
+				<groupId>tools.jackson</groupId>
+				<artifactId>jackson-bom</artifactId>
+				<version>${jackson3-version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson</groupId>
+				<artifactId>jackson-bom</artifactId>
+				<version>${jackson2-version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<!--
+			*****************************************************************************************************************
+			*																												*
+			*	Dependencies for JUnit																						*
+			*																												*
+			*****************************************************************************************************************
+			-->
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<!-- Section for custom dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<profiles>
+		<!--
+			Profile configures JEAF Generator to run the code generation process from a file that is stored in the local file system.
+		-->
+		<profile>
+			<id>RunCodeGenerationFromXMIFile</id>
+			<activation>
+				<property>
+					<name>runCodeGenerationFromXMIFile</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<xmiDirectory>${xmiDirectory}</xmiDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<!--
+			Profile configures JEAF Generator to run the code generation process from a Maven artifact that contains the UML model 
+			as XMI files.
+		-->
+		<profile>
+			<id>RunCodeGenerationFromModelArtifact</id>
+			<activation>
+				<property>
+					<name>runCodeGenerationFromModelArtifact</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<modelArtifactGroupID>${modelArtifactGroupID}</modelArtifactGroupID>
+									<modelArtifactArtifactID>${modelArtifactArtifactID}</modelArtifactArtifactID>
+									<modelArtifactXMIPath>${modelArtifactXMIPath}</modelArtifactXMIPath>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<profile>
+			<id>UseDefaultProjectTemplate</id>
+			<activation>
+				<property>
+					<name>!jeaf.xmiDirectory</name>
+				</property>
+			</activation>
+			<properties>
+				<jeaf.projectGeneratedFromModelTemplate>true</jeaf.projectGeneratedFromModelTemplate>
+				<jeaf.umlModelFile>Maven_Project_Template.uml</jeaf.umlModelFile>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>CreateMavenProject</id>
+
+			<dependencies>
+				<!-- Define dependency on UML model that is used as default if no other one is provided -->
+				<dependency>
+					<groupId>com.anaptecs.jeaf.uml</groupId>
+					<artifactId>jeaf-generator-project-template-model</artifactId>
+					<version>0.1.0-SNAPSHOT</version>
+					<type>zip</type>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<configuration>
+							<properties>
+								<!--
+								<jeaf.groupId>my.group.id</jeaf.groupId>
+								<jeaf.artifactId>my-artifact</jeaf.artifactId>
+								<jeaf.projectName>My Default Project</jeaf.projectName>
+				
+								<jeaf.projectVersion>0.1.0-SNAPSHOT</jeaf.projectVersion>
+				
+								<jeaf.mavenProjectUMLPackage>a.b.c</jeaf.mavenProjectUMLPackage>
+				
+								<jeaf.parentGroupId>com.anaptecs.jeaf</jeaf.parentGroupId>
+								<jeaf.parentArtifactId>jeaf-generator-project-parent</jeaf.parentArtifactId>
+								<jeaf.useDefaultParent>true</jeaf.useDefaultParent>
+				
+								<jeaf.archetype>SERVICE_MODEL</jeaf.archetype>
+								<jeaf.parentVersion>${project.version}</jeaf.parentVersion>
+								
+								<jeaf.initialOutputDirectory=/Users/tillmann.schall/Projects/JEAF/jeaf-timetable-demo-api>
+								-->
+							</properties>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<generateMavenProjectStructure>true</generateMavenProjectStructure>
+									<initialProjectGeneration>true</initialProjectGeneration>
+									
+									<mavenProjectGeneratedFromModelTemplate>${jeaf.projectGeneratedFromModelTemplate}</mavenProjectGeneratedFromModelTemplate>
+									
+									<!-- Default XMI file is used if nothing else is explicitly defined. -->
+									<modelArtifactGroupID>com.anaptecs.jeaf.uml</modelArtifactGroupID>
+									<modelArtifactArtifactID>jeaf-generator-project-template-model</modelArtifactArtifactID>
+									<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
+									
+									<xmiDirectory>${jeaf.xmiDirectory}</xmiDirectory>
+									<umlModelFile>${jeaf.umlModelFile}</umlModelFile>
+
+									<packages>
+										<package>com.anaptecs.jeaf.maven</package>
+									</packages>
+
+									<mavenProjectDefaultParentGroupId>${jeaf.parentGroupId}</mavenProjectDefaultParentGroupId>
+									<mavenProjectDefaultParentArtifactId>${jeaf.parentArtifactId}</mavenProjectDefaultParentArtifactId>
+									<mavenProjectDefaultParentVersion>${jeaf.parentVersion}</mavenProjectDefaultParentVersion>
+
+									<mavenGroupIdPattern>${jeaf.groupId}</mavenGroupIdPattern>
+									<mavenArtifactIdPattern>${jeaf.artifactId}</mavenArtifactIdPattern>
+									<mavenArtifactDefaultVersion>${jeaf.projectVersion}</mavenArtifactDefaultVersion>
+									<mavenProjectNamePattern>${jeaf.projectName}</mavenProjectNamePattern>
+
+									<mavenProjectUMLPackage>${jeaf.mavenProjectUMLPackage}</mavenProjectUMLPackage>
+
+									<mavenProjectDefaultArchetype>${jeaf.archetype}</mavenProjectDefaultArchetype>
+
+									<mavenProjectDefaultParentGroupId>${jeaf.parentGroupId}</mavenProjectDefaultParentGroupId>
+									<mavenProjectDefaultParentArtifactId>${jeaf.parentArtifactId}</mavenProjectDefaultParentArtifactId>
+									<mavenProjectDefaultParentVersion>${jeaf.parentVersion}</mavenProjectDefaultParentVersion>
+									<mavenProjectUseDefaultParent>${jeaf.useDefaultParent}</mavenProjectUseDefaultParent>
+									
+									<initialOutputDirectory>${jeaf.initialOutputDirectory}</initialOutputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<!-- Profile contains all plugin configurations that are required to check-in generated code during build. -->
+		<profile>
+			<id>CheckinGeneratedCode</id>
+			<build>
+				<plugins>
+					<plugin>
+					    <artifactId>maven-scm-plugin</artifactId>
+					    <version>${maven.scmplugin.version}</version>
+					    <executions>
+					    	<execution>
+					    		<id>CheckinGeneratedCode</id>
+					    		<goals>
+					    			<goal>checkin</goal>
+					    		</goals>
+					    		<phase>prepare-package</phase>
+					    		<configuration>
+					    			<message>[maven-scm-plugin] Checkin of generated files during build</message>
+					    			<excludes>**/pom.xml</excludes>
+					    			<includes>**/*</includes>
+					    			<basedir>${basedir}/src-gen</basedir>
+					    		</configuration>
+					    	</execution>
+					    </executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<!-- Profile with all settings for releasing to central maven repo -->
+		<profile>
+			<id>OSSRelease</id>
+			<build>
+				<plugins>
+					<!-- PGP Plugin is needed to sign jars -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven.gpg.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+			                    <configuration>
+			                       <gpgArguments>
+			                          <arg>--pinentry-mode</arg>
+			                          <arg>loopback</arg>
+			                       </gpgArguments>
+			                    </configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven.javadoc.version}</version>
+						<configuration>
+							<aggregate>true</aggregate>
+							<failOnError>false</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${maven.source.version}</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>${maven.central-publishing.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>central</publishingServerId>
+							<autoPublish>false</autoPublish>
+							<waitUntil>validated</waitUntil>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>${maven.release.version}</version>
+						<configuration>
+							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<useReleaseProfile>false</useReleaseProfile>
+							<releaseProfiles>release</releaseProfiles>
+							<goals>deploy</goals>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<release>${java.release.version}</release>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.jar.version}</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${maven.build.helper.version}</version>
+				<executions>
+					<execution>
+						<id>sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/main/java</source>
+								<source>${basedir}/src-gen/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-sources</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/test/java</source>
+								<source>${basedir}/src-gen/test/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/resources</directory>
+								</resource>
+								<resource>
+									<directory>${basedir}/src-gen/main/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-resources</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/test/resources</directory>
+								</resource>
+								<resource>
+									<directory>${basedir}/src-gen/test/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- 
+				Here we override the parent-pom attach-sources execution which calls sources:jar goal. That goal forks 
+				the lifecycle, causing the generate-sources phase to be called twice for the install goal. 
+				This causes any other plugins bound to the generate-sources phase like JEAF Generator to be called 
+				twice, which results in nothing but duplicate processing and longer build times.
+				
+				Big thanks to: http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html 
+			-->
+		    <plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>DISABLE_FORKED_LIFECYCLE</phase>
+					</execution>
+
+					<execution>
+						<id>attach-sources-no-fork</id>
+						<inherited>true</inherited>
+						<goals>
+    						<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven.deploy.version}</version>
+				<configuration>
+					<deployAtEnd>true</deployAtEnd>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${maven.versions.version}</version>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+			</plugin>
+		</plugins>
+
+
+		<pluginManagement>
+			<plugins>
+				<!--
+				    Configure JEAF Generator plugin that is used for code generation.
+					
+				    Specific parts of the configuration are defined in the individual modules.
+				-->
+				<plugin>
+					<groupId>com.anaptecs.jeaf.generator</groupId>
+					<artifactId>jeaf-generator-maven-plugin</artifactId>
+					<version>${maven.jeaf-generator-plugin.version}</version>
+					<configuration>
+						<!-- 
+						*****************************************************************************************************************
+						*																												*
+						*	General properties to configure JEAF Generator																*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<umlModelingTool>${umlModelingTool}</umlModelingTool>
+					
+						<enterpriseJavaType>${enterpriseJavaType}</enterpriseJavaType>
+					
+						<packages>
+							<package>${umlPackage}</package>
+						</packages>
+
+						<umlModelFile>${umlModelFile}</umlModelFile>
+						<customProfileFile>${customProfileFile}</customProfileFile>
+
+						<customRootTemplate>${customRootTemplate}</customRootTemplate>
+
+						<customCheckFiles>${customCheckFiles}</customCheckFiles>
+
+						<enforceCustomTemplateExecution>${enforceCustomTemplateExecution}</enforceCustomTemplateExecution>
+
+						<sourceDirectory>${sourceDirectory}</sourceDirectory>
+						<sourceGenDirectory>${sourceGenDirectory}</sourceGenDirectory>
+						<cleanSourceGen>${cleanSourceGen}</cleanSourceGen>
+
+						<resourceDirectory>${resourceDirectory}</resourceDirectory>
+						<resourceGenDirectory>${resourceGenDirectory}</resourceGenDirectory>
+						<cleanResourceGen>${cleanResourceGen}</cleanResourceGen>
+
+						<sourceTestDirectory>${sourceTestDirectory}</sourceTestDirectory>
+						<sourceTestGenDirectory>${sourceTestGenDirectory}</sourceTestGenDirectory>
+						<cleanSourceTestGen>${cleanSourceTestGen}</cleanSourceTestGen>
+
+						<resourceTestDirectory>${resourceTestDirectory}</resourceTestDirectory>
+						<resourceTestGenDirectory>${resourceTestGenDirectory}</resourceTestGenDirectory>
+						<cleanResourceTestGen>${cleanResourceTestGen}</cleanResourceTestGen>
+
+						<useMultiModuleWorkflow>${useMultiModuleWorkflow}</useMultiModuleWorkflow>
+
+						<fileHeaderCompany>${fileHeaderCompany}</fileHeaderCompany>
+						<fileHeaderAuthor>${fileHeaderAuthor}</fileHeaderAuthor>
+						<fileHeaderCopyright>${fileHeaderCopyright}</fileHeaderCopyright>
+						<fileHeaderVersion>${fileHeaderVersion}</fileHeaderVersion>
+
+						<disableFormatting>${disableFormatting}</disableFormatting>
+						<disableSourceFormatting>${disableSourceFormatting}</disableSourceFormatting>
+						<disableResourceFormatting>${disableResourceFormatting}</disableResourceFormatting>
+
+						<javaFormatterStyleFile>${javaFormatterStyleFile}</javaFormatterStyleFile>
+						<xmlFormatterStyleFile>${xmlFormatterStyleFile}</xmlFormatterStyleFile>
+
+						<removeUnusedImports>${removeUnusedImports}</removeUnusedImports>
+						<importGroups>${importGroups}</importGroups>
+						<staticImportGroups>${staticImportGroups}</staticImportGroups>
+
+						<breakBuildOnGeneratorError>${breakBuildOnGeneratorError}</breakBuildOnGeneratorError>
+
+						<softLinkSuffix>${softLinkSuffix}</softLinkSuffix>
+
+						<nextMajorReleasePublishingDate>${nextMajorReleasePublishingDate}</nextMajorReleasePublishingDate>
+						<nextMajorReleaseVersion>${nextMajorReleaseVersion}</nextMajorReleaseVersion>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties that control code generation for POJOs															*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generatePOJOs>${generatePOJOs}</generatePOJOs>
+
+						<allowTypeWildcardsForGenerics>${allowTypeWildcardsForGenerics}</allowTypeWildcardsForGenerics>
+						<generateEqualsAndHashCode>${generateEqualsAndHashCode}</generateEqualsAndHashCode>
+						<generateEqualsAndHashCodeForStandardClasses>${generateEqualsAndHashCodeForStandardClasses}</generateEqualsAndHashCodeForStandardClasses>
+						<generateEqualsAndHashCodeForCompositeDataTypes>${generateEqualsAndHashCodeForCompositeDataTypes}</generateEqualsAndHashCodeForCompositeDataTypes>
+						<generateEqualsAndHashCodeForOpenAPIDataTypes>${generateEqualsAndHashCodeForOpenAPIDataTypes}</generateEqualsAndHashCodeForOpenAPIDataTypes>
+						<implementComparableForOpenAPIDataTypes>${implementComparableForOpenAPIDataTypes}</implementComparableForOpenAPIDataTypes>
+						<makePOJOsSerializable>${makePOJOsSerializable}</makePOJOsSerializable>
+						<generateImmutableClasses>${generateImmutableClasses}</generateImmutableClasses>
+						<generateOfOperation>${generateOfOperation}</generateOfOperation>
+						<generateOfOperationForOpenAPIDataType>${generateOfOperationForOpenAPIDataType}</generateOfOperationForOpenAPIDataType>
+						<enforceExplicitDefaultValueForOptionalPrimitives>${enforceExplicitDefaultValueForOptionalPrimitives}</enforceExplicitDefaultValueForOptionalPrimitives>
+						<enableDetailedToStringMethod>${enableDetailedToStringMethod}</enableDetailedToStringMethod>
+
+						<generateCustomConstraints>${generateCustomConstraints}</generateCustomConstraints>
+
+						<useGenericBuilderPattern>${useGenericBuilderPattern}</useGenericBuilderPattern>
+						<generateBuilderWithAllMandatoryFields>${generateBuilderWithAllMandatoryFields}</generateBuilderWithAllMandatoryFields>
+						<generateObjectValidationInBuilder>${generateObjectValidationInBuilder}</generateObjectValidationInBuilder>
+						<enableLegacyBuilderStyle>${enableLegacyBuilderStyle}</enableLegacyBuilderStyle>
+
+						<javaGenericSoftLinkType>${javaGenericSoftLinkType}</javaGenericSoftLinkType>
+						<useSoftLinkSuffixInJava>${useSoftLinkSuffixInJava}</useSoftLinkSuffixInJava>
+
+						<generateValidAnnotationForAssociations>${generateValidAnnotationForAssociations}</generateValidAnnotationForAssociations>
+						<generateValidationAnnotationsForAttributesFromMultiplicity>${generateValidationAnnotationsForAttributesFromMultiplicity}</generateValidationAnnotationsForAttributesFromMultiplicity>
+						<generateValidationAnnotationsForAssociationsFromMultiplicity>${generateValidationAnnotationsForAssociationsFromMultiplicity}</generateValidationAnnotationsForAssociationsFromMultiplicity>
+
+						<generateNotNullAnnotationForSingleValuedProperties>${generateNotNullAnnotationForSingleValuedProperties}</generateNotNullAnnotationForSingleValuedProperties>
+						<notNullAnnotationNameForSingleValuedProperties>${notNullAnnotationNameForSingleValuedProperties}</notNullAnnotationNameForSingleValuedProperties>
+						<generateNotEmptyAnnotationForMultiValuedProperties>${generateNotEmptyAnnotationForMultiValuedProperties}</generateNotEmptyAnnotationForMultiValuedProperties>
+						<notEmptyAnnotationNameForMultiValuedProperties>${notEmptyAnnotationNameForMultiValuedProperties}</notEmptyAnnotationNameForMultiValuedProperties>
+						<generateNotNullAnnotationForSingleValuedServiceParameters>${generateNotNullAnnotationForSingleValuedServiceParameters}</generateNotNullAnnotationForSingleValuedServiceParameters>
+						<notNullAnnotationNameForSingleValuedServiceParameters>${notNullAnnotationNameForSingleValuedServiceParameters}</notNullAnnotationNameForSingleValuedServiceParameters>
+						<generateNotEmptyAnnotationForMultiValuedServiceParameters>${generateNotEmptyAnnotationForMultiValuedServiceParameters}</generateNotEmptyAnnotationForMultiValuedServiceParameters>
+						<notEmptyAnnotationNameForMultiValuedServiceParameters>${notEmptyAnnotationNameForMultiValuedServiceParameters}</notEmptyAnnotationNameForMultiValuedServiceParameters>
+						<generateNotNullAnnotationForSingleValuedRESTParameters>${notEmptyAnnotationNameForMultiValuedServiceParameters}</generateNotNullAnnotationForSingleValuedRESTParameters>
+						<notNullAnnotationNameForSingleValuedRESTParameters>${notNullAnnotationNameForSingleValuedRESTParameters}</notNullAnnotationNameForSingleValuedRESTParameters>
+						<generateNotEmptyAnnotationForMultiValuedRESTParameters>${generateNotEmptyAnnotationForMultiValuedRESTParameters}</generateNotEmptyAnnotationForMultiValuedRESTParameters>
+						<notEmptyAnnotationNameForMultiValuedRESTParameters>${notEmptyAnnotationNameForMultiValuedRESTParameters}</notEmptyAnnotationNameForMultiValuedRESTParameters>
+
+						<generateHeavyExtensibleEnums>${generateHeavyExtensibleEnums}</generateHeavyExtensibleEnums>
+
+						<generatePublicObjectView>${generatePublicObjectView}</generatePublicObjectView>
+
+						<generatePublicSettersForAssociations>${generatePublicSettersForAssociations}</generatePublicSettersForAssociations>
+						<generateNullChecksForToOneAssociations>${generateNullChecksForToOneAssociations}</generateNullChecksForToOneAssociations>
+						<useArraysOnlyForPrimitives>${useArraysOnlyForPrimitives}</useArraysOnlyForPrimitives>
+						<disableSaveCopyOfCollectionsInBuilders>${disableSaveCopyOfCollectionsInBuilders}</disableSaveCopyOfCollectionsInBuilders>
+						<disableImmutabilityOfCollections>${disableImmutabilityOfCollections}</disableImmutabilityOfCollections>
+						<disableImmutabilityOfArrays>${disableImmutabilityOfArrays}</disableImmutabilityOfArrays>
+						<disableImmutabilityOfBinaryData>${disableImmutabilityOfBinaryData}</disableImmutabilityOfBinaryData>
+
+						<addGeneratedAnnotation>${addGeneratedAnnotation}</addGeneratedAnnotation>
+						<addGenerationTimestamp>${addGenerationTimestamp}</addGenerationTimestamp>
+						<generationComment>${generationComment}</generationComment>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties that have impact on code generation for Jackson													*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generateJacksonAnnotations>${generateJacksonAnnotations}</generateJacksonAnnotations>
+						<generateJSONSerializers>${generateJSONSerializers}</generateJSONSerializers>
+
+						<jacksonVersions>${jacksonVersions}</jacksonVersions>
+
+						<jackson2Suffix>${jackson2Suffix}</jackson2Suffix>
+						<jackson2Subpackage>${jackson2Subpackage}</jackson2Subpackage>
+						<jackson3Suffix>${jackson3Suffix}</jackson3Suffix>
+						<jackson3Subpackage>${jackson3Subpackage}</jackson3Subpackage>
+						<generateJSONAutoDetectAnnotationOnClass>${generateJSONAutoDetectAnnotationOnClass}</generateJSONAutoDetectAnnotationOnClass>
+						<generateJsonSetterAnnotationOnBuilderOperations>${generateJsonSetterAnnotationOnBuilderOperations}</generateJsonSetterAnnotationOnBuilderOperations>
+						<enableSemVerForJSON>${enableSemVerForJSON}</enableSemVerForJSON>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties that have impact ration for Services / REST														*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generateServiceInterfaces>${generateServiceInterfaces}</generateServiceInterfaces>
+						<generateReactiveServiceInterfaces>${generateReactiveServiceInterfaces}</generateReactiveServiceInterfaces>
+						<generateRESTResources>${generateRESTResources}</generateRESTResources>
+						<generateReactiveRESTResources>${generateReactiveRESTResources}</generateReactiveRESTResources>
+
+						<targetRuntime>${targetRuntime}</targetRuntime>
+						<restLibrary>${restLibrary}</restLibrary>
+
+						<generateJAXRSAnnotations>${generateJAXRSAnnotations}</generateJAXRSAnnotations>
+
+						<generateSecurityAnnotation>${generateSecurityAnnotation}</generateSecurityAnnotation>
+						<defaultSecurityRoleName>${defaultSecurityRoleName}</defaultSecurityRoleName>
+
+						<generateRESTRequestValidation>${generateRESTRequestValidation}</generateRESTRequestValidation>
+						<generateRESTResponseValidation>${generateRESTResponseValidation}</generateRESTResponseValidation>
+
+						<filterCustomHeaders>${filterCustomHeaders}</filterCustomHeaders>
+						<restPathPrefix>${restPathPrefix}</restPathPrefix>
+						<restDefaultSuccessStatusCode>${restDefaultSuccessStatusCode}</restDefaultSuccessStatusCode>
+						<restDefaultVoidStatusCode>${restDefaultVoidStatusCode}</restDefaultVoidStatusCode>
+
+						<generateRESTServiceProxies>${generateRESTServiceProxies}</generateRESTServiceProxies>
+						<generateReactiveRESTServiceProxies>${generateReactiveRESTServiceProxies}</generateReactiveRESTServiceProxies>
+						<generateRESTServiceProxyConfigFile>${generateRESTServiceProxyConfigFile}</generateRESTServiceProxyConfigFile>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties that configure generation of OpenAPI specifications												*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generateOpenAPISpec>${generateOpenAPISpec}</generateOpenAPISpec>
+						<generateDependentOpenAPISpecs>${generateDependentOpenAPISpecs}</generateDependentOpenAPISpecs>
+						<useTransitiveOpenAPIDependencies>${useTransitiveOpenAPIDependencies}</useTransitiveOpenAPIDependencies>
+
+						<disableOpenAPIDependencyChecks>${disableOpenAPIDependencyChecks}</disableOpenAPIDependencyChecks>
+						<validateOpenAPISpec>${validateOpenAPISpec}</validateOpenAPISpec>
+						<validateReferencedOpenAPISpecs>${validateReferencedOpenAPISpecs}</validateReferencedOpenAPISpecs>
+
+						<openAPIVersion>${openAPIVersion}</openAPIVersion>
+
+						<openAPISpecReferenceDefaultLocation>${openAPISpecReferenceDefaultLocation}</openAPISpecReferenceDefaultLocation>
+
+						<openAPIGenericSoftLinkType>${openAPIGenericSoftLinkType}</openAPIGenericSoftLinkType>
+						<useSoftLinkSuffixInOpenAPI>${useSoftLinkSuffixInOpenAPI}</useSoftLinkSuffixInOpenAPI>
+
+						<openAPICommentStyle>${openAPICommentStyle}</openAPICommentStyle>
+						<openAPILiteralQuotationCharacter>${openAPILiteralQuotationCharacter}</openAPILiteralQuotationCharacter>
+						<openAPIExampleQuotationCharacter>${openAPIExampleQuotationCharacter}</openAPIExampleQuotationCharacter>
+						<suppressTechnicalHeaders>${suppressTechnicalHeaders}</suppressTechnicalHeaders>
+						<enableYAML11Compatibility>${enableYAML11Compatibility}</enableYAML11Compatibility>
+
+						<openAPIContactName>${openAPIContactName}</openAPIContactName>
+						<openAPIContactURL>${openAPIContactURL}</openAPIContactURL>
+						<openAPIContactEmail>${openAPIContactEmail}</openAPIContactEmail>
+						<openAPILicenseName>${openAPILicenseName}</openAPILicenseName>
+						<openAPILicenseURL>${openAPILicenseURL}</openAPILicenseURL>
+						<openAPITermsOfUseURL>${openAPITermsOfUseURL}</openAPITermsOfUseURL>
+
+						<addIgnoredHeadersToOpenAPISpec>${addIgnoredHeadersToOpenAPISpec}</addIgnoredHeadersToOpenAPISpec>
+						<suppressClassNameCommentInOpenAPISpec>${suppressClassNameCommentInOpenAPISpec}</suppressClassNameCommentInOpenAPISpec>
+						<suppressNotRequiredNullableInOpenAPISpec>${suppressNotRequiredNullableInOpenAPISpec}</suppressNotRequiredNullableInOpenAPISpec>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties that configure generation of model reports														*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generateTypesReport>${generateTypesReport}</generateTypesReport>
+						<typesReportName>${typesReportName}</typesReportName>
+						<typesReportFileName>${typesReportFileName}</typesReportFileName>
+						<typesReportStereotypes>${typesReportStereotypes}</typesReportStereotypes>
+						<typesReportShowAlias>${typesReportShowAlias}</typesReportShowAlias>
+						<typesReportAliasRowName>${typesReportAliasRowName}</typesReportAliasRowName>
+						<typesReportShowPackage>${typesReportShowPackage}</typesReportShowPackage>
+						<typesReportShowProperties>${typesReportShowProperties}</typesReportShowProperties>
+						<typesReportGroupByPackage>${typesReportGroupByPackage}</typesReportGroupByPackage>
+
+						<generateModelReport>${generateModelReport}</generateModelReport>
+
+						<generateBreakingChangesReport>${generateBreakingChangesReport}</generateBreakingChangesReport>
+						<breakingChangesReportName>${breakingChangesReportName}</breakingChangesReportName>
+						<breakingChangesReportFileName>${breakingChangesReportFileName}</breakingChangesReportFileName>
+						<breakingChangesReportGroupByPackage>${breakingChangesReportGroupByPackage}</breakingChangesReportGroupByPackage>
+
+						<generateRESTDeprecationReport>${generateRESTDeprecationReport}</generateRESTDeprecationReport>
+						<restDeprecationReportName>${restDeprecationReportName}</restDeprecationReportName>
+						<restDeprecationReportFileName>${restDeprecationReportFileName}</restDeprecationReportFileName>
+
+						<generateJavaDeprecationReport>${generateJavaDeprecationReport}</generateJavaDeprecationReport>
+						<javaDeprecationReportName>${javaDeprecationReportName}</javaDeprecationReportName>
+						<javaDeprecationReportFileName>${javaDeprecationReportFileName}</javaDeprecationReportFileName>
+
+						<deprecationReportFormat>${deprecationReportFormat}</deprecationReportFormat>
+
+						<generateSecurityRolesReport>${generateSecurityRolesReport}</generateSecurityRolesReport>
+						<securityRolesReportName>${securityRolesReportName}</securityRolesReportName>
+						<securityRolesReportFileName>${securityRolesReportFileName}</securityRolesReportFileName>
+						<securityRolesReportFormat>${securityRolesReportFormat}</securityRolesReportFormat>
+						<listUnsecuredRESTEndpoints>${listUnsecuredRESTEndpoints}</listUnsecuredRESTEndpoints>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties configurte JEAF Framework specifc code generation												*
+						*																												*
+						*****************************************************************************************************************
+						-->
+
+						<generatePersistentObjects>${generatePersistentObjects}</generatePersistentObjects>
+						<peristentObjectsOIDRowName>${peristentObjectsOIDRowName}</peristentObjectsOIDRowName>
+						<peristentObjectsVersionLabelRowName>${peristentObjectsVersionLabelRowName}</peristentObjectsVersionLabelRowName>
+
+						<generateServiceObjects>${generateServiceObjects}</generateServiceObjects>
+
+						<generateDomainObjects>${generateDomainObjects}</generateDomainObjects>
+
+						<generateObjectMappers>${generateObjectMappers}</generateObjectMappers>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
