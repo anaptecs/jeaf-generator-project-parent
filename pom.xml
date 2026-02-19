@@ -4,7 +4,7 @@
 
 	<groupId>com.anaptecs.jeaf</groupId>
 	<artifactId>jeaf-generator-project-parent</artifactId>
-	<version>0.5.1-SNAPSHOT</version>
+	<version>0.5.1</version>
 
 	<packaging>pom</packaging>
 	<name>JEAF Generator Project Parent</name>
@@ -25,7 +25,7 @@
 		<connection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</connection>
 		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</developerConnection>
 		<url>https://github.com/anaptecs/jeaf-generator-project-parent</url>
-		<tag>HEAD</tag>
+		<tag>v0.5.1</tag>
 	</scm>
 
 
