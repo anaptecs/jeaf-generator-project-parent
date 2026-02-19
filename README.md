@@ -54,17 +54,22 @@ To run JEAF Generator using a local XMI file you have to configure at least the 
 ```xml
 <properties>
 		<!--
-			Directory which contains all XMI files. The files have to be exported from MagicDraw UML using its Eclipse UML2
-			Export v2.x (File - Export To - Eclipse UML2 (v2.0x) XMI File)
+			Directory which contains all XMI files. The files have to be exported from
+			MagicDraw UML using its Eclipse UML2 Export v2.x
+			(File - Export To - Eclipse UML2 (v2.0x) XMI File)
 		-->
 		<xmiDirectory></xmiDirectory>
 
-		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
+		<!-- 
+			UML package (plus subpackages) which will be the one that is considered
+			during code generation.
+		--> 
 		<umlPackage>com.anaptecs.jeaf.timetable.api</umlPackage>
 
 		<!--
-			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
-			name of the file has to be provided as we assume that the file is located in the XMI directory.
+			Name of the model file that should be used. Usually it has the same name
+			as the MagicDraw UML project. Only the name of the file has to be provided
+			as we assume that the file is located in the XMI directory.
 		-->
 		<umlModelFile></umlModelFile>
 </properties>
@@ -90,16 +95,18 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 		<!--
 			Group ID of the artifact that contains the XMI files of the UML model.
 			
-			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
-			referencing an artifact that contains the XMI files.
+			The UML model can either be defined by pointing to the directory where the
+			XMI files are located directly or by referencing an artifact that contains
+			the XMI files.
 		-->
 		<modelArtifactGroupID></modelArtifactGroupID>
 
 		<!--
 			Artifact ID of the artifact that contains the XMI files of the UML model.
 			
-			The UML model can either be defined by pointing to the directory where the XMI files are located directly or by
-			referencing an artifact that contains the XMI files.
+			The UML model can either be defined by pointing to the directory where the
+			XMI files are located directly or by referencing an artifact that contains
+			the XMI files.
 		-->
 		<modelArtifactArtifactID></modelArtifactArtifactID>
 
@@ -108,12 +115,16 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 		-->
 		<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
 
-		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
+		<!-- 
+			UML package (plus subpackages) which will be the one that is considered 
+			during code generation.
+		--> 
 		<umlPackage>com.anaptecs.jeaf.timetable.api</umlPackage>
 
 		<!--
-			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
-			name of the file has to be provided as we assume that the file is located in the XMI directory.
+			Name of the model file that should be used. Usually it has the same name
+			as the MagicDraw UML project. Only the name of the file has to be provided
+			as we assume that the file is located in the XMI directory.
 		-->
 		<umlModelFile></umlModelFile>
 </properties>
