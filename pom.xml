@@ -22,9 +22,9 @@
 
 
 	<scm>
-		<connection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</connection>
-		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-project-parent.git</developerConnection>
-		<url>https://github.com/anaptecs/jeaf-project-parent</url>
+		<connection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</connection>
+		<developerConnection>scm:git:https://github.com/anaptecs/jeaf-generator-project-parent.git</developerConnection>
+		<url>https://github.com/anaptecs/jeaf-generator-project-parent</url>
 		<tag>HEAD</tag>
 	</scm>
 
