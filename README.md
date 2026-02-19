@@ -1,3 +1,6 @@
+![Maven Central Version](https://img.shields.io/maven-central/v/com.anaptecs.jeaf/jeaf-generator-project-parent) ![Apache 2.0 License](https://img.shields.io/github/license/anaptecs/jeaf-generator-project-parent)
+
+
 # Readme
 
 This project provides a parent POM file that can be used as starting point for using JEAF Generator.
