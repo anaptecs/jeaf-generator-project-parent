@@ -8,10 +8,10 @@ This project provides a parent POM file that can be used as starting point for u
 
 Basically you have two options:
 
-*  to use this POM as parent POM for your projects
+* to use this POM as parent POM for your projects
 * copy it and use it as a template
 
-
+<br>
 
 ## How does this POM work
 
@@ -57,7 +57,7 @@ To run JEAF Generator using a local XMI file you have to configure at least the 
 		<xmiDirectory></xmiDirectory>
 
 		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
-		<umlPackage>com.anaptecs.jeeaf.demo</umlPackage>
+		<umlPackage>com.anaptecs.jeaf.timetable.api</umlPackage>
 
 		<!--
 			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
@@ -106,7 +106,7 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 		<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
 
 		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
-		<umlPackage>com.anaptecs.jeeaf.demo</umlPackage>
+		<umlPackage>com.anaptecs.jeaf.timetable.api</umlPackage>
 
 		<!--
 			Name of the model file that should be used. Usually it has the same name as the MagicDraw UML project. Only the
