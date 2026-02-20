@@ -11,8 +11,8 @@ This project provides a parent POM file that can be used as starting point for u
 
 Basically you have two options:
 
-* to use this POM as parent POM for your projects
-* copy it and use it as a template
+* use this POM as parent POM for your projects
+* copy it and use it as a template for you own POM
 
 <br>
 
