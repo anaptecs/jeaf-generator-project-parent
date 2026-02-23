@@ -96,7 +96,7 @@
 
 		<!-- Version for Jackson 3 (added via dependency management)-->
 		<jackson3-version>3.0.4</jackson3-version>
-		<jackson2-version>2.21.0</jackson2-version>
+		<jackson2-version>2.21.1</jackson2-version>
 
 		<!-- Version for JUnit (added via dependency management) -->
 		<junit.version>5.13.4</junit.version>
