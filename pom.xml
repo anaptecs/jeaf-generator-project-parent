@@ -1480,7 +1480,6 @@
 		
 		<profile>
 			<id>CreateMavenProject</id>
-
 			<dependencies>
 				<!-- Define dependency on UML model that is used as default if no other one is provided -->
 				<dependency>
@@ -1491,34 +1490,11 @@
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>
-
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>com.anaptecs.jeaf.generator</groupId>
 						<artifactId>jeaf-generator-maven-plugin</artifactId>
-						<configuration>
-							<properties>
-								<!--
-								<jeaf.groupId>my.group.id</jeaf.groupId>
-								<jeaf.artifactId>my-artifact</jeaf.artifactId>
-								<jeaf.projectName>My Default Project</jeaf.projectName>
-				
-								<jeaf.projectVersion>0.1.0-SNAPSHOT</jeaf.projectVersion>
-				
-								<jeaf.mavenProjectUMLPackage>a.b.c</jeaf.mavenProjectUMLPackage>
-				
-								<jeaf.parentGroupId>com.anaptecs.jeaf</jeaf.parentGroupId>
-								<jeaf.parentArtifactId>jeaf-generator-project-parent</jeaf.parentArtifactId>
-								<jeaf.useDefaultParent>true</jeaf.useDefaultParent>
-				
-								<jeaf.archetype>SERVICE_MODEL</jeaf.archetype>
-								<jeaf.parentVersion>${project.version}</jeaf.parentVersion>
-								
-								<jeaf.initialOutputDirectory=/Users/tillmann.schall/Projects/JEAF/jeaf-timetable-demo-api>
-								-->
-							</properties>
-						</configuration>
 						<executions>
 							<execution>
 								<goals>
@@ -1542,10 +1518,6 @@
 									<packages>
 										<package>com.anaptecs.jeaf.maven</package>
 									</packages>
-
-									<mavenProjectDefaultParentGroupId>${jeaf.parentGroupId}</mavenProjectDefaultParentGroupId>
-									<mavenProjectDefaultParentArtifactId>${jeaf.parentArtifactId}</mavenProjectDefaultParentArtifactId>
-									<mavenProjectDefaultParentVersion>${jeaf.parentVersion}</mavenProjectDefaultParentVersion>
 
 									<mavenGroupIdPattern>${jeaf.groupId}</mavenGroupIdPattern>
 									<mavenArtifactIdPattern>${jeaf.artifactId}</mavenArtifactIdPattern>

@@ -132,3 +132,19 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 
 
 
+## Configuration Parameters
+
+| Configuration Parameter       | Default         | Description |
+| ----------------------------- | --------------- | ----------- |
+| `jeaf.groupId`                | mandatory       |             |
+| `jeaf.artifactId`             | mandatory       |             |
+| `jeaf.projectName`            | mandatory       |             |
+| `jeaf.projectVersion`         | mandatory       |             |
+| `jeaf.mavenProjectUMLPackage` | mandatory       |             |
+| `jeaf.parentGroupId`          | optional        |             |
+| `jeaf.parentArtifactId`       | optional        |             |
+| `jeaf.parentVersion`          | optional        |             |
+| `jeaf.useDefaultParent`       | `true`          |             |
+| `jeaf.archetype`              | `SERVICE_MODEL` |             |
+| `jeaf.initialOutputDirectory` | optional        |             |
+
