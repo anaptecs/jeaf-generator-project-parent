@@ -1477,7 +1477,8 @@
 				<jeaf.umlModelFile>Maven_Project_Template.uml</jeaf.umlModelFile>
 			</properties>
 		</profile>
-		
+
+
 		<profile>
 			<id>CreateMavenProject</id>
 			<dependencies>
@@ -1534,6 +1535,60 @@
 									<mavenProjectUseDefaultParent>${jeaf.useDefaultParent}</mavenProjectUseDefaultParent>
 									
 									<initialOutputDirectory>${jeaf.initialOutputDirectory}</initialOutputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<profile>
+			<id>UpdateMavenProjectStructureFromXMIFile</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<generateMavenProjectStructure>true</generateMavenProjectStructure>
+									<initialProjectGeneration>false</initialProjectGeneration>
+									<xmiDirectory>${xmiDirectory}</xmiDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<profile>
+			<id>UpdateMavenProjectStructureFromModelArtifact</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<generateMavenProjectStructure>true</generateMavenProjectStructure>
+									<initialProjectGeneration>false</initialProjectGeneration>
+									<modelArtifactGroupID>${modelArtifactGroupID}</modelArtifactGroupID>
+									<modelArtifactArtifactID>${modelArtifactArtifactID}</modelArtifactArtifactID>
+									<modelArtifactXMIPath>${modelArtifactXMIPath}</modelArtifactXMIPath>
 								</configuration>
 							</execution>
 						</executions>
