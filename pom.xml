@@ -95,7 +95,7 @@
 		<spring-boot.version>4.0.3</spring-boot.version>
 
 		<!-- Version for Jackson 3 (added via dependency management)-->
-		<jackson3-version>3.0.4</jackson3-version>
+		<jackson3-version>3.1.0</jackson3-version>
 		<jackson2-version>2.21.0</jackson2-version>
 
 		<!-- Version for JUnit (added via dependency management) -->
