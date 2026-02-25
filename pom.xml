@@ -151,7 +151,10 @@
 		-->
 		<modelArtifactXMIPath>xmi</modelArtifactXMIPath>
 
-		<!-- UML package (plus subpackages) which will be the one that is considered during code generation. --> 
+		<!-- 
+			UML package(s) (plus subpackages) which will be the one that is considered during code generation.
+			If you want to define multiple packages then they have to be separated by ";"
+		--> 
 		<umlPackage />
 
 		<!--
