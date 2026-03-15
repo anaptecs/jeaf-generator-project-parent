@@ -89,7 +89,7 @@
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
 		<jeaf-rest-api.version>2.0.0-RC1</jeaf-rest-api.version>
-		<jeaf-validation-api.version>1.8.0</jeaf-validation-api.version>
+		<jeaf-validation-api.version>1.9.0</jeaf-validation-api.version>
 
 		<!-- Version for Spring Boot (added via dependency management) -->
 		<spring-boot.version>4.0.3</spring-boot.version>
