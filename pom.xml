@@ -1260,7 +1260,7 @@
 		-->
 
 		<!--
-		 	Switch defines whether persistent objects should be generated or not.
+			Switch defines whether persistent objects should be generated or not.
 		-->
 		<generatePersistentObjects>false</generatePersistentObjects>
 
@@ -1287,7 +1287,7 @@
 		<generateDomainObjects>false</generateDomainObjects>
 
 		<!--
-		 	Switch defines whether object mappers should be generated or not.
+			Switch defines whether object mappers should be generated or not.
 		-->
 		<generateObjectMappers>false</generateObjectMappers>
 	</properties>
@@ -1477,7 +1477,8 @@
 				<jeaf.umlModelFile>Maven_Project_Template.uml</jeaf.umlModelFile>
 			</properties>
 		</profile>
-		
+
+
 		<profile>
 			<id>CreateMavenProject</id>
 			<dependencies>
@@ -1543,29 +1544,83 @@
 		</profile>
 
 
+		<profile>
+			<id>UpdateMavenProjectStructureFromXMIFile</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<generateMavenProjectStructure>true</generateMavenProjectStructure>
+									<initialProjectGeneration>false</initialProjectGeneration>
+									<xmiDirectory>${xmiDirectory}</xmiDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+		<profile>
+			<id>UpdateMavenProjectStructureFromModelArtifact</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.anaptecs.jeaf.generator</groupId>
+						<artifactId>jeaf-generator-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>Generator</goal>
+								</goals>
+								<phase>generate-sources</phase>
+								<configuration>
+									<generateMavenProjectStructure>true</generateMavenProjectStructure>
+									<initialProjectGeneration>false</initialProjectGeneration>
+									<modelArtifactGroupID>${modelArtifactGroupID}</modelArtifactGroupID>
+									<modelArtifactArtifactID>${modelArtifactArtifactID}</modelArtifactArtifactID>
+									<modelArtifactXMIPath>${modelArtifactXMIPath}</modelArtifactXMIPath>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
 		<!-- Profile contains all plugin configurations that are required to check-in generated code during build. -->
 		<profile>
 			<id>CheckinGeneratedCode</id>
 			<build>
 				<plugins>
 					<plugin>
-					    <artifactId>maven-scm-plugin</artifactId>
-					    <version>${maven.scmplugin.version}</version>
-					    <executions>
-					    	<execution>
-					    		<id>CheckinGeneratedCode</id>
-					    		<goals>
-					    			<goal>checkin</goal>
-					    		</goals>
-					    		<phase>prepare-package</phase>
-					    		<configuration>
-					    			<message>[maven-scm-plugin] Checkin of generated files during build</message>
-					    			<excludes>**/pom.xml</excludes>
-					    			<includes>**/*</includes>
-					    			<basedir>${basedir}/src-gen</basedir>
-					    		</configuration>
-					    	</execution>
-					    </executions>
+						<artifactId>maven-scm-plugin</artifactId>
+						<version>${maven.scmplugin.version}</version>
+						<executions>
+							<execution>
+								<id>CheckinGeneratedCode</id>
+								<goals>
+									<goal>checkin</goal>
+								</goals>
+								<phase>prepare-package</phase>
+								<configuration>
+									<message>[maven-scm-plugin] Checkin of generated files during build</message>
+									<excludes>**/pom.xml</excludes>
+									<includes>**/*</includes>
+									<basedir>${basedir}/src-gen</basedir>
+								</configuration>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
@@ -1589,12 +1644,12 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
-			                    <configuration>
-			                       <gpgArguments>
-			                          <arg>--pinentry-mode</arg>
-			                          <arg>loopback</arg>
-			                       </gpgArguments>
-			                    </configuration>
+								<configuration>
+								   <gpgArguments>
+									  <arg>--pinentry-mode</arg>
+									  <arg>loopback</arg>
+								   </gpgArguments>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -1758,7 +1813,7 @@
 				
 				Big thanks to: http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html 
 			-->
-		    <plugin>
+			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>${maven.source.version}</version>
 				<executions>
@@ -1771,7 +1826,7 @@
 						<id>attach-sources-no-fork</id>
 						<inherited>true</inherited>
 						<goals>
-    						<goal>jar-no-fork</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -1804,9 +1859,9 @@
 		<pluginManagement>
 			<plugins>
 				<!--
-				    Configure JEAF Generator plugin that is used for code generation.
+					Configure JEAF Generator plugin that is used for code generation.
 					
-				    Specific parts of the configuration are defined in the individual modules.
+					Specific parts of the configuration are defined in the individual modules.
 				-->
 				<plugin>
 					<groupId>com.anaptecs.jeaf.generator</groupId>
