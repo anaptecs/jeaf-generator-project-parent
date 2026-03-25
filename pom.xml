@@ -86,6 +86,7 @@
 
 		<!-- Version of JEAF Generator that should be used. -->
 		<maven.jeaf-generator-plugin.version>1.28.3-SNAPSHOT</maven.jeaf-generator-plugin.version>
+		<jeaf-generator-project-template-model.version>0.1.0-SNAPSHOT</jeaf-generator-project-template-model.version>
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
 		<jeaf-rest-api.version>2.0.0-RC1</jeaf-rest-api.version>
@@ -1254,7 +1255,42 @@
 		<!--
 		*****************************************************************************************************************
 		*																												*
-		*	Properties configurte JEAF Framework specifc code generation												*
+		*	Properties configure JEAF Framework specifc code generation													*
+		*																												*
+		*****************************************************************************************************************
+		-->
+
+		<!--
+			This parameter can be used to define a pattern that is applied to determine the issue tracking URL for a 
+			domain etc. if none is explicitly specified in the UML model.
+			
+			By default, no pattern is defined.
+		-->
+		<issueTrackingURLPattern></issueTrackingURLPattern>
+
+		<!--
+			Parameter defines the base URL of the Maven repository where artifacts are hosted.
+		-->
+		<mavenRepoBaseURL></mavenRepoBaseURL>
+
+		<!--
+			Switch can be used to generated release notes based on the information defined in the UML model.
+		-->
+		<generateReleaseNotes>false</generateReleaseNotes>
+
+		<!--
+			Name of the directory where release notes will be written to. The parameter is defined relative to the 
+			projects base directory.
+			
+			By default, <code>releases</code> will be used.
+		-->
+		<releaseNotesDirectory>releases</releaseNotesDirectory>
+
+
+		<!--
+		*****************************************************************************************************************
+		*																												*
+		*	Properties configure JEAF Framework specifc code generation													*
 		*																												*
 		*****************************************************************************************************************
 		-->
@@ -1486,7 +1522,7 @@
 				<dependency>
 					<groupId>com.anaptecs.jeaf.uml</groupId>
 					<artifactId>jeaf-generator-project-template-model</artifactId>
-					<version>0.1.0-SNAPSHOT</version>
+					<version>${jeaf-generator-project-template-model.version}</version>
 					<type>zip</type>
 					<scope>provided</scope>
 				</dependency>
@@ -2144,7 +2180,7 @@
 						<!--
 						*****************************************************************************************************************
 						*																												*
-						*	Properties configurte JEAF Framework specifc code generation												*
+						*	Properties configure JEAF Framework specifc code generation													*
 						*																												*
 						*****************************************************************************************************************
 						-->
