@@ -1255,7 +1255,7 @@
 		<!--
 		*****************************************************************************************************************
 		*																												*
-		*	Properties configure JEAF Framework specifc code generation													*
+		*	Properties configure generation of release note																*
 		*																												*
 		*****************************************************************************************************************
 		-->
@@ -1569,6 +1569,12 @@
 									<mavenProjectDefaultParentArtifactId>${jeaf.parentArtifactId}</mavenProjectDefaultParentArtifactId>
 									<mavenProjectDefaultParentVersion>${jeaf.parentVersion}</mavenProjectDefaultParentVersion>
 									<mavenProjectUseDefaultParent>${jeaf.useDefaultParent}</mavenProjectUseDefaultParent>
+									
+									<mavenProjectGenerationUMLModelArtifactGroupID>${jeaf.modelArtifactGroupID}</mavenProjectGenerationUMLModelArtifactGroupID>
+									<mavenProjectGenerationUMLModelArtifactArtifactID>${jeaf.modelArtifactArtifactID}</mavenProjectGenerationUMLModelArtifactArtifactID>
+									<mavenProjectGenerationUMLModelArtifactVersion>${jeaf.modelArtifactVersion}</mavenProjectGenerationUMLModelArtifactVersion>
+									<mavenProjectGenerationUMLModelArtifactXMIPath>${jeaf.modelArtifactXMIPath}</mavenProjectGenerationUMLModelArtifactXMIPath>
+									<mavenProjectGenerationUMLModelFile>${jeaf.modelArtifactUMLModelFile}</mavenProjectGenerationUMLModelFile>
 									
 									<initialOutputDirectory>${jeaf.initialOutputDirectory}</initialOutputDirectory>
 								</configuration>
@@ -2175,6 +2181,21 @@
 						<securityRolesReportFileName>${securityRolesReportFileName}</securityRolesReportFileName>
 						<securityRolesReportFormat>${securityRolesReportFormat}</securityRolesReportFormat>
 						<listUnsecuredRESTEndpoints>${listUnsecuredRESTEndpoints}</listUnsecuredRESTEndpoints>
+
+
+						<!--
+						*****************************************************************************************************************
+						*																												*
+						*	Properties configure generation of release note																*
+						*																												*
+						*****************************************************************************************************************
+						-->
+				
+						<issueTrackingURLPattern>${issueTrackingURLPattern}</issueTrackingURLPattern>
+						<mavenRepoBaseURL>${mavenRepoBaseURL}</mavenRepoBaseURL>
+				
+						<generateReleaseNotes>${generateReleaseNotes}</generateReleaseNotes>
+						<releaseNotesDirectory>${releaseNotesDirectory}</releaseNotesDirectory>
 
 
 						<!--
