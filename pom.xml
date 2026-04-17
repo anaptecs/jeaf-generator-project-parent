@@ -1225,6 +1225,32 @@
 		<deprecationReportFormat>MARKDOWN</deprecationReportFormat>
 
 		<!--
+			Switch enables the generation of a ToDo report about the model parts which are configured to be processed.
+		-->
+		<generateToDoReport>false</generateToDoReport>
+
+		<!--
+			Title of the ToDo report.
+		-->
+		<toDoReportName>ToDo Report</toDoReportName>
+
+		<!--
+			Name of the file that contains the Java deprecation report. The file extension will be chosen based on the 
+			report format.
+		-->
+		<toDoReportFileName>ToDo_Report</toDoReportFileName>
+
+		<!--
+			Switch defines if for ToDo report content should be grouped by package.
+		-->
+		<groupToDoReportByPackage>true</groupToDoReportByPackage>
+
+		<!--
+			Parameter defines the format of the ToDo report. Supported formats are MARKDOWN, HTML and XML.
+		-->
+		<toDoReportFormat>MARKDOWN</toDoReportFormat>
+
+		<!--
 			Switch enables the generation of a security roles report about the model parts which are configured to be
 			processed.
 		-->
@@ -2173,8 +2199,13 @@
 						<generateJavaDeprecationReport>${generateJavaDeprecationReport}</generateJavaDeprecationReport>
 						<javaDeprecationReportName>${javaDeprecationReportName}</javaDeprecationReportName>
 						<javaDeprecationReportFileName>${javaDeprecationReportFileName}</javaDeprecationReportFileName>
-
 						<deprecationReportFormat>${deprecationReportFormat}</deprecationReportFormat>
+
+						<generateToDoReport>${generateToDoReport}</generateToDoReport>
+						<toDoReportName>${toDoReportName}</toDoReportName>
+						<toDoReportFileName>${toDoReportFileName}</toDoReportFileName>
+						<groupToDoReportByPackage>${groupToDoReportByPackage}</groupToDoReportByPackage>
+						<toDoReportFormat>${toDoReportFormat}</toDoReportFormat>
 
 						<generateSecurityRolesReport>${generateSecurityRolesReport}</generateSecurityRolesReport>
 						<securityRolesReportName>${securityRolesReportName}</securityRolesReportName>
