@@ -644,6 +644,62 @@
 
 
 		<!--
+			Parameter can be used to add documentation annotations for stereotypes Alias, Example, BreakingChange, JEAFDeprecated
+			and <code>ToDo</code> to generated Java code.
+			
+			Using configuration parameters "aliasAnnotationClassName", "exampleAnnotationClassName", 
+			"breakingChangeNoticeAnnotationClassName, "deprecationNoticeAnnotationClassName, "toDoAnnotationClassName", 
+			"toDoTypeClassName" it is possible to define the used annotation types.
+			
+			By default types from Maven artifact <code>com.anaptecs.jeaf.generator:jeaf-generator-annotations</code> are used. 
+			That's why a dependency on this artifact is required if this switch is enabled and default types will be used.
+		-->
+		<addDocumentationAnnotations>false</addDocumentationAnnotations>
+
+		<!--
+			Parameter can be used to define the annotation class that should be used for stereotype <code>Alias</code>.<br/>
+			
+			By default type from Maven artifact "com.anaptecs.jeaf.generator:jeaf-generator-annotations" are used.
+		-->
+		<aliasAnnotationClassName>com.anaptecs.jeaf.generator.annotations.Alias</aliasAnnotationClassName>
+
+		<!--
+			Parameter can be used to define the annotation class that should be used for stereotype <code>Example</code>.<br/>
+			
+			By default type from Maven artifact "com.anaptecs.jeaf.generator:jeaf-generator-annotations" are used.
+		-->
+		<exampleAnnotationClassName>com.anaptecs.jeaf.generator.annotations.Example</exampleAnnotationClassName>
+
+		<!--
+			Parameter can be used to define the annotation class that should be used for stereotype <code>BreakingChange</code>.<br/>
+			
+			By default type from Maven artifact "com.anaptecs.jeaf.generator:jeaf-generator-annotations" are used.
+		-->
+		<breakingChangeNoticeAnnotationClassName>com.anaptecs.jeaf.generator.annotations.BreakingChangeNotice</breakingChangeNoticeAnnotationClassName>
+
+		<!--
+			Parameter can be used to define the annotation class that should be used for stereotype <code>JEAFDeprecated</code>.<br/>
+			
+			By default type from Maven artifact "com.anaptecs.jeaf.generator:jeaf-generator-annotations" are used.
+		-->
+		<deprecationNoticeAnnotationClassName>com.anaptecs.jeaf.generator.annotations.DeprecationNotice</deprecationNoticeAnnotationClassName>
+
+
+		<!--
+			Parameter can be used to define the annotation class that should be used for stereotype <code>ToDo</code>.<br/>
+			
+			By default type from Maven artifact "com.anaptecs.jeaf.generator:jeaf-generator-annotations" are used.
+		-->
+		<toDoAnnotationClassName>com.anaptecs.jeaf.generator.annotations.ToDo</toDoAnnotationClassName>
+
+		<!--
+			Parameter can be used to define the enumeration that should be used for "ToDoType"
+			
+			By default type from Maven artifact <code>com.anaptecs.jeaf.generator:jeaf-generator-annotations</code> are used.
+		-->
+		<toDoTypeClassName>com.anaptecs.jeaf.generator.annotations.ToDoType</toDoTypeClassName>
+
+		<!--
 		*****************************************************************************************************************
 		*																												*
 		*	Properties that have impact on code generation for Jackson													*
@@ -2068,6 +2124,15 @@
 						<addGeneratedAnnotation>${addGeneratedAnnotation}</addGeneratedAnnotation>
 						<addGenerationTimestamp>${addGenerationTimestamp}</addGenerationTimestamp>
 						<generationComment>${generationComment}</generationComment>
+
+
+						<addDocumentationAnnotations>${addDocumentationAnnotations}</addDocumentationAnnotations>
+						<aliasAnnotationClassName>${aliasAnnotationClassName}</aliasAnnotationClassName>
+						<exampleAnnotationClassName>${exampleAnnotationClassName}</exampleAnnotationClassName>
+						<breakingChangeNoticeAnnotationClassName>${breakingChangeNoticeAnnotationClassName}</breakingChangeNoticeAnnotationClassName>
+						<deprecationNoticeAnnotationClassName>${deprecationNoticeAnnotationClassName}</deprecationNoticeAnnotationClassName>
+						<toDoAnnotationClassName>${toDoAnnotationClassName}</toDoAnnotationClassName>
+						<toDoTypeClassName>${toDoTypeClassName}</toDoTypeClassName>
 
 
 						<!--
