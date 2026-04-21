@@ -563,6 +563,11 @@
 		<generateHeavyExtensibleEnums>false</generateHeavyExtensibleEnums>
 
 		<!--
+			Switch can be used to generated deprecated getter for <code>boolean</code> properties.
+		-->
+		<generateDeprecatedGetterForBooleans>false</generateDeprecatedGetterForBooleans>
+
+		<!--
 			Switch defines if only the public view of POJO's or ServiceObjects should be generated. This will lead to generated
 			classes where some internal structures of a POJO / ServiceObject will be hidden to the outside world.
 		-->
