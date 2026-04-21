@@ -285,6 +285,11 @@
 		<disableSourceFormatting>false</disableSourceFormatting>
 
 		<!--
+			Parameter can be be used to disable formatting of "src" directory, which by default will be formatted.
+		-->
+		<disableSrcDirFormatting>false</disableSrcDirFormatting>
+
+		<!--
 			Parameter can be used to disable formatting of generated resources only.
 		-->
 		<disableResourceFormatting>false</disableResourceFormatting>
@@ -2047,6 +2052,7 @@
 
 						<disableFormatting>${disableFormatting}</disableFormatting>
 						<disableSourceFormatting>${disableSourceFormatting}</disableSourceFormatting>
+						<disableSrcDirFormatting>${}disableSrcDirFormatting</disableSrcDirFormatting>
 						<disableResourceFormatting>${disableResourceFormatting}</disableResourceFormatting>
 
 						<javaFormatterStyleFile>${javaFormatterStyleFile}</javaFormatterStyleFile>
