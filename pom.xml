@@ -85,7 +85,7 @@
 
 
 		<!-- Version of JEAF Generator that should be used. -->
-		<maven.jeaf-generator-plugin.version>1.28.3-SNAPSHOT</maven.jeaf-generator-plugin.version>
+		<maven.jeaf-generator-plugin.version>1.29.1</maven.jeaf-generator-plugin.version>
 		<jeaf-generator-project-template-model.version>0.1.0-SNAPSHOT</jeaf-generator-project-template-model.version>
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
