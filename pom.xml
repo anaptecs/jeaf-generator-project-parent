@@ -85,7 +85,7 @@
 
 
 		<!-- Version of JEAF Generator that should be used. -->
-		<maven.jeaf-generator-plugin.version>1.28.3-SNAPSHOT</maven.jeaf-generator-plugin.version>
+		<maven.jeaf-generator-plugin.version>1.29.2</maven.jeaf-generator-plugin.version>
 		<jeaf-generator-project-template-model.version>0.1.0-SNAPSHOT</jeaf-generator-project-template-model.version>
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
@@ -499,6 +499,12 @@
 			but also from multiplicity of modeled associations.
 		-->
 		<generateValidationAnnotationsForAssociationsFromMultiplicity>true</generateValidationAnnotationsForAssociationsFromMultiplicity>
+
+		<!--
+			Switch defines whether Java Validation Annotations should be generated also for the properties of builders. 
+			By default this is not the case.
+		-->
+		<generateValidationAnnotationsForBuilderProperties>false</generateValidationAnnotationsForBuilderProperties>
 
 		<!--
 			Switch can be used to enable that @NotNull annotation is generated for setter and getter of single valued 
@@ -2106,6 +2112,7 @@
 						<generateValidAnnotationForAssociations>${generateValidAnnotationForAssociations}</generateValidAnnotationForAssociations>
 						<generateValidationAnnotationsForAttributesFromMultiplicity>${generateValidationAnnotationsForAttributesFromMultiplicity}</generateValidationAnnotationsForAttributesFromMultiplicity>
 						<generateValidationAnnotationsForAssociationsFromMultiplicity>${generateValidationAnnotationsForAssociationsFromMultiplicity}</generateValidationAnnotationsForAssociationsFromMultiplicity>
+						<generateValidationAnnotationsForBuilderProperties>${generateValidationAnnotationsForBuilderProperties}</generateValidationAnnotationsForBuilderProperties>
 
 						<generateNotNullAnnotationForSingleValuedProperties>${generateNotNullAnnotationForSingleValuedProperties}</generateNotNullAnnotationForSingleValuedProperties>
 						<notNullAnnotationNameForSingleValuedProperties>${notNullAnnotationNameForSingleValuedProperties}</notNullAnnotationNameForSingleValuedProperties>
