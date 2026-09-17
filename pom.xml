@@ -61,7 +61,7 @@
 
 		<!-- Versions of plugin used for build process in general -->
 		<maven.compiler.version>3.15.0</maven.compiler.version>
-		<maven.jar.version>3.5.0</maven.jar.version>
+		<maven.jar.version>3.5.1</maven.jar.version>
 		<maven.deploy.version>3.1.4</maven.deploy.version>
 		<maven.versions.version>2.21.0</maven.versions.version>
 		<maven.surefire.version>3.5.6</maven.surefire.version>
