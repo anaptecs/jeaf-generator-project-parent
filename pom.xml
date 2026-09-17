@@ -85,7 +85,7 @@
 
 
 		<!-- Version of JEAF Generator that should be used. -->
-		<maven.jeaf-generator-plugin.version>1.29.3</maven.jeaf-generator-plugin.version>
+		<maven.jeaf-generator-plugin.version>1.30.4</maven.jeaf-generator-plugin.version>
 		<jeaf-generator-project-template-model.version>0.1.0-SNAPSHOT</jeaf-generator-project-template-model.version>
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
@@ -392,6 +392,13 @@
 		-->
 		<implementComparableForOpenAPIDataTypes>true</implementComparableForOpenAPIDataTypes>
 
+
+		<!--
+			Switch can be used to enforce that OpenAPIDataTypes are not inlined in generated OpenAPI specifications. This means
+			that there will be an explicit type for all OpenAPIDataTypes.
+		-->
+		<neverInlineOpenAPIDataTypes>true</neverInlineOpenAPIDataTypes>
+
 		<!--
 			Switch defines whether POJO's should be serializable or not.
 		-->
@@ -493,6 +500,23 @@
 			but also from multiplicity of modeled attributes.
 		-->
 		<generateValidationAnnotationsForAttributesFromMultiplicity>true</generateValidationAnnotationsForAttributesFromMultiplicity>
+
+		<!--
+			Switch defines whether Java Validation Annotations should be generated on the get operation for derived properties.
+		-->
+		<generateValidationAnnotationsForDerivedProperties>false</generateValidationAnnotationsForDerivedProperties>
+
+		<!--
+			Switch defines whether Java Validation Annotations should not only be generated for explicitly modeled annotations
+			but also from multiplicity based on parameters operations.
+		-->
+		<generateValidationAnnotationsForOperationParametersFromMultiplicity>false</generateValidationAnnotationsForOperationParametersFromMultiplicity>
+
+		<!--
+			Switch defines whether Java Validation Annotations should not only be generated for explicitly modeled annotations
+			but also from multiplicity based on parameters of service operations.
+		-->
+		<generateValidationAnnotationsForServiceOperationParametersFromMultiplicity>true</generateValidationAnnotationsForServiceOperationParametersFromMultiplicity>
 
 		<!--
 			Switch defines whether Java Validation Annotations should not only be generated for explicitly modeled annotations
@@ -1043,6 +1067,22 @@
 			model / JEAF Generator perspective it makes no difference.
 		-->
 		<openAPIVersion>OPEN_API_3_0</openAPIVersion>
+
+		<!--
+			Parameter can be used to explicitly set the version info inside the OpenAPI specification info section. The
+			parameter is only used if the version is not set explicitly in the UMM model. If the version is neither set in the
+			UML model nor using this parameter then the Maven project version will be used.
+		-->
+		<openAPISpecVersionInfo></openAPISpecVersionInfo>
+
+		<!--
+			Parameter contains the fully qualified name of all validation groups that should be active during OpenAPI
+   			generation. Validation groups are a mechanism that can be used to implement version specific constraints in OpenAPI
+			as well as in Java.
+			
+			Multiple entries have to be separated by ",".
+		-->
+		<activeOpenAPIValidationGroups></activeOpenAPIValidationGroups>
 
 		<!--
 			Parameter can be used to define a default path for the location of OpenAPI specification in case that they are
@@ -2058,7 +2098,7 @@
 
 						<disableFormatting>${disableFormatting}</disableFormatting>
 						<disableSourceFormatting>${disableSourceFormatting}</disableSourceFormatting>
-						<disableSrcDirFormatting>${}disableSrcDirFormatting</disableSrcDirFormatting>
+						<disableSrcDirFormatting>${disableSrcDirFormatting}</disableSrcDirFormatting>
 						<disableResourceFormatting>${disableResourceFormatting}</disableResourceFormatting>
 
 						<javaFormatterStyleFile>${javaFormatterStyleFile}</javaFormatterStyleFile>
@@ -2092,6 +2132,7 @@
 						<generateEqualsAndHashCodeForCompositeDataTypes>${generateEqualsAndHashCodeForCompositeDataTypes}</generateEqualsAndHashCodeForCompositeDataTypes>
 						<generateEqualsAndHashCodeForOpenAPIDataTypes>${generateEqualsAndHashCodeForOpenAPIDataTypes}</generateEqualsAndHashCodeForOpenAPIDataTypes>
 						<implementComparableForOpenAPIDataTypes>${implementComparableForOpenAPIDataTypes}</implementComparableForOpenAPIDataTypes>
+						<neverInlineOpenAPIDataTypes>${neverInlineOpenAPIDataTypes}</neverInlineOpenAPIDataTypes>
 						<makePOJOsSerializable>${makePOJOsSerializable}</makePOJOsSerializable>
 						<generateImmutableClasses>${generateImmutableClasses}</generateImmutableClasses>
 						<generateOfOperation>${generateOfOperation}</generateOfOperation>
@@ -2111,6 +2152,9 @@
 
 						<generateValidAnnotationForAssociations>${generateValidAnnotationForAssociations}</generateValidAnnotationForAssociations>
 						<generateValidationAnnotationsForAttributesFromMultiplicity>${generateValidationAnnotationsForAttributesFromMultiplicity}</generateValidationAnnotationsForAttributesFromMultiplicity>
+						<generateValidationAnnotationsForDerivedProperties>${generateValidationAnnotationsForDerivedProperties}</generateValidationAnnotationsForDerivedProperties>
+						<generateValidationAnnotationsForOperationParametersFromMultiplicity>${generateValidationAnnotationsForOperationParametersFromMultiplicity}</generateValidationAnnotationsForOperationParametersFromMultiplicity>
+						<generateValidationAnnotationsForServiceOperationParametersFromMultiplicity>${generateValidationAnnotationsForServiceOperationParametersFromMultiplicity}</generateValidationAnnotationsForServiceOperationParametersFromMultiplicity>
 						<generateValidationAnnotationsForAssociationsFromMultiplicity>${generateValidationAnnotationsForAssociationsFromMultiplicity}</generateValidationAnnotationsForAssociationsFromMultiplicity>
 						<generateValidationAnnotationsForBuilderProperties>${generateValidationAnnotationsForBuilderProperties}</generateValidationAnnotationsForBuilderProperties>
 
@@ -2226,6 +2270,8 @@
 						<validateReferencedOpenAPISpecs>${validateReferencedOpenAPISpecs}</validateReferencedOpenAPISpecs>
 
 						<openAPIVersion>${openAPIVersion}</openAPIVersion>
+						<openAPISpecVersionInfo>${openAPISpecVersionInfo}</openAPISpecVersionInfo>
+						<activeOpenAPIValidationGroups>${activeOpenAPIValidationGroups}</activeOpenAPIValidationGroups>
 
 						<openAPISpecReferenceDefaultLocation>${openAPISpecReferenceDefaultLocation}</openAPISpecReferenceDefaultLocation>
 
