@@ -446,17 +446,17 @@ All of the following parameters are exposed as Maven properties on this POM and 
 
 | Configuration Parameter       | Default         | Description |
 | ----------------------------- | --------------- | ----------- |
-| `jeaf.groupId`                | mandatory       |             |
-| `jeaf.artifactId`             | mandatory       |             |
-| `jeaf.projectName`            | mandatory       |             |
-| `jeaf.projectVersion`         | mandatory       |             |
-| `jeaf.mavenProjectUMLPackage` | mandatory       |             |
-| `jeaf.parentGroupId`          | optional        |             |
-| `jeaf.parentArtifactId`       | optional        |             |
-| `jeaf.parentVersion`          | optional        |             |
-| `jeaf.useDefaultParent`       | `true`          |             |
-| `jeaf.archetype`              | `SERVICE_MODEL` |             |
-| `jeaf.initialOutputDirectory` | optional        |             |
+| `jeaf.groupId`                | mandatory       | Maven group ID of the Maven project that will be created. |
+| `jeaf.artifactId`             | mandatory       | Maven artifact ID of the Maven project that will be created. It's also used as the name of the project directory. |
+| `jeaf.projectName`            | mandatory       | Name of the Maven project that will be created (`<name>` in the generated POM). |
+| `jeaf.projectVersion`         | mandatory       | Initial version of the Maven project that will be created, e.g. `0.1.0-SNAPSHOT`. |
+| `jeaf.mavenProjectUMLPackage` | mandatory       | UML package (plus subpackages) that will be set in the generated POM and used for code generation by the new project. |
+| `jeaf.parentGroupId`          | optional        | Group ID of the parent POM of the new project. If not set, the group ID of this POM (`com.anaptecs.jeaf`) is used. Only relevant if `jeaf.useDefaultParent` is `true`. |
+| `jeaf.parentArtifactId`       | optional        | Artifact ID of the parent POM of the new project. If not set, the artifact ID of this POM (`jeaf-generator-project-parent`) is used. Only relevant if `jeaf.useDefaultParent` is `true`. |
+| `jeaf.parentVersion`          | optional        | Version of the parent POM of the new project. If not set, the version of this POM is used. Only relevant if `jeaf.useDefaultParent` is `true`. |
+| `jeaf.useDefaultParent`       | `true`          | Makes the generated project use a parent POM (defined by `jeaf.parentGroupId`, `jeaf.parentArtifactId` and `jeaf.parentVersion`), even if the UML model doesn't define one. |
+| `jeaf.archetype`              | `SERVICE_MODEL` | Archetype of the Maven project that will be created. Supported: `GENERATOR_PROJECT_PARENT_POM`, `DOMAIN`, `DATA_TYPES`, `SERVICE_MODEL`, `MASTER_DATA`, `EVENTS`, `UML_MODEL_PROJECT`, `IMPLEMENTATION`, `ARTIFACT`, `CUSTOM`. |
+| `jeaf.initialOutputDirectory` | optional        | Directory the generated Maven project is written to. If not set, the project is created in `./temp/{ARTIFACT_ID}`. **Caution:** an existing directory with this name is deleted first. |
 
 
 
