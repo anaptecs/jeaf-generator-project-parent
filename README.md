@@ -18,14 +18,14 @@ Basically you have two options:
 
 ## How does this POM work
 
-### JEAF Generator configuration
+### JEAF Generator Configuration
 
 This POM defines properties for all configuration parameters that are supported by JEAF Generator. Whenever new properties will be introduced then this parent POM will be updated and a new version will be released.
 
 <br>
 
 ### Profiles
-In addition to all configuration parameters also the following profiles are defined:
+In addition to all configuration parameters this POM all defines profiles to simplify usage of JEAF Generator such as:
 
 * `RunCodeGenerationFromXMIFile`<br>As the name implies, this profile can be used to run the code generation directly from an so called XMI file. XMI files are a tool independent representation of your UML model (e.g. from [MagicDraw UML](https://www.3ds.com/products/catia/no-magic/magicdraw))<br><br>
 
@@ -36,8 +36,6 @@ Besides the location from which the XMI files are read the profiles do not have 
 <br>
 
 ## Usage as parent POM
-
-When using this POM as parent POM the a 
 
 Before you can start with code generation you have to provide a minimum set of information:
 
@@ -85,8 +83,8 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 
 **Notes:**
 
-+ Please be aware when using the Maven Artifact approach that then your project also needs to have a Maven dependency on the artifact.
-+ In general we recommend to use the model artifact approach, as storing XMI files inside SCM systems like git will blow up repository sizes over time
+* Please be aware when using the Maven Artifact approach that then your project also needs to have a Maven dependency on the artifact.
+* In general we recommend to use the model artifact approach, as storing XMI files inside SCM systems like git will blow up repository sizes over time
 
 <br>
 
@@ -130,9 +128,21 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 </properties>
 ```
 
+<br>
 
+## Profiles
+
+This POM defines the following profiles:
+* **`RunCodeGenerationFromXMIFile`**<br>Profile can be used to generate code using a XMI files (UML model export) that is stored on the local file system.<br><br>
+* **`RunCodeGenerationFromModelArtifact`**<br>Profile can be used to generate code using a Maven artifact that contains the XMI files of the UML model export.<br><br>
+* **`CreateMavenProject`**<br>Profile can be used to generate a Maven project structure that uses JEAF Generator for code generation. Using this profile is similar to using a Maven archetype to generate a project structure.<br><br>
+* **`UpdateMavenProjectStructureFromXMIFile` / `UpdateMavenProjectStructureFromModelArtifact`**<br>Profiles can be used to update Maven project structure based on the definitions inside the UML model. Depending on the variant of the profile this will either be done using XMI files from the local file system or from the Maven artifact. Both are defined inside of the project POM.<br>
+
+<br>
 
 ## Configuration Parameters
+
+### Profile `CreateMavenProject`
 
 | Configuration Parameter       | Default         | Description |
 | ----------------------------- | --------------- | ----------- |
@@ -148,3 +158,10 @@ To run JEAF Generator using a Maven artifact that contains the XMI files of the 
 | `jeaf.archetype`              | `SERVICE_MODEL` |             |
 | `jeaf.initialOutputDirectory` | optional        |             |
 
+
+
+### Profile `UpdateMavenProjectStructure`
+
+| Configuration Parameter | Default | Description      |
+| ----------------------- | ------- | ---------------- |
+| `jeaf.xmiDirectory`     |         | Only for profile |
