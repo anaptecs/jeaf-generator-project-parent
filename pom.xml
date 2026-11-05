@@ -178,6 +178,11 @@
 		<customCheckFiles />
 
 		<!--
+			Parameter can be used to disable all non-mandatory checks.
+		-->
+		<disableAllNonMandatoryChecks>false</disableAllNonMandatoryChecks>
+
+		<!--
 			By default custom templates are only executed in case that also default templates are executed. Using this switch
 			is it also possible to only execute custom templates.
 		-->
@@ -591,6 +596,24 @@
 			Parameter defines the name of the <code>NotEmpty</code> annotation that should be used for REST resources.
 		-->
 		<notEmptyAnnotationNameForMultiValuedRESTParameters>jakarta.annotation.Nonnull</notEmptyAnnotationNameForMultiValuedRESTParameters>
+
+		<!--
+			Parameter defines the name of the <code>EnumSubset</code> annotation that should be used for validations.
+
+			For further details please refer to <code>com.anaptecs.jeaf.validation.api.EnumSubset</code> in JEAF Validation
+			API. Besides the default value it is also possible to use a custom implementation. This must be build similar to
+			the default implementation.
+		-->
+		<enumSubsetAnnotationClassName>com.anaptecs.jeaf.validation.api.EnumSubset</enumSubsetAnnotationClassName>
+
+		<!--
+			Parameter defines the name of the <code>TypeRestriction</code> annotation that should be used for validations.
+
+			For further details please refer to <code>com.anaptecs.jeaf.validation.api.TypeRestriction</code> in JEAF
+			Validation API. Besides the default value it is also possible to use a custom implementation. This must be build
+			similar to the default implementation.
+		-->
+		<typeRestrictionAnnotationClassName>com.anaptecs.jeaf.validation.api.TypeRestriction</typeRestrictionAnnotationClassName>
 
 		<!--
 			Switch defines if extensible enums should be generated in light-weight or heavy-weight style.
@@ -1085,6 +1108,11 @@
 		<activeOpenAPIValidationGroups></activeOpenAPIValidationGroups>
 
 		<!--
+			Parameter defines the file extensions that are considered to be OpenAPI specification files.
+		-->
+		<openAPIExtensions>*.yaml,*.yml</openAPIExtensions>
+
+		<!--
 			Parameter can be used to define a default path for the location of OpenAPI specification in case that they are
 			referenced from another OpenAPI spec. Settings this parameter is equivalent to setting 
 			OpenAPISpecReference.location. Default location will only be used in case that nothing is defined in
@@ -1203,6 +1231,15 @@
 		<addIgnoredHeadersToOpenAPISpec>false</addIgnoredHeadersToOpenAPISpec>
 
 		<!--
+			Parameter defines a name space build from one or more UML packages (separated by ";") that is used to avoid
+			naming conflicts of schema elements when generating multiple, dependent OpenAPI specifications.
+
+			Example:
+				<openAPINamespacePackages>com.anaptecs.jeaf.junit;com.anaptecs.jeaf.spring</openAPINamespacePackages>
+		-->
+		<openAPINamespacePackages></openAPINamespacePackages>
+
+		<!--
 			Parameter can be used to suppress link to model element in generated OpenAPI specification. By default fully
 			qualified name of the type is added as comment above the type definition.
 		-->
@@ -1297,6 +1334,19 @@
 			Switch defines if for breaking changes report content should be grouped by package.
 		-->
 		<breakingChangesReportGroupByPackage>true</breakingChangesReportGroupByPackage>
+
+		<!--
+			Switch enables the generation of a migration report about the model parts which are configured to be processed.
+			The migration report is based an model elements that are tagged with stereotype "BreakingChange" or
+			"JEAFDeprecated".
+		-->
+		<generateMigrationReport>false</generateMigrationReport>
+
+		<!--
+			Name of the file that contains the migration changes report. The file extension will be chosen based on the
+			report format.
+		-->
+		<migrationReportFileName>Migration_Report</migrationReportFileName>
 
 		<!--
 			Switch enables the generation of a REST / OpenAPI deprecation report about the model parts which are configured to
@@ -2071,6 +2121,8 @@
 
 						<customCheckFiles>${customCheckFiles}</customCheckFiles>
 
+						<disableAllNonMandatoryChecks>${disableAllNonMandatoryChecks}</disableAllNonMandatoryChecks>
+
 						<enforceCustomTemplateExecution>${enforceCustomTemplateExecution}</enforceCustomTemplateExecution>
 
 						<sourceDirectory>${sourceDirectory}</sourceDirectory>
@@ -2170,6 +2222,9 @@
 						<notNullAnnotationNameForSingleValuedRESTParameters>${notNullAnnotationNameForSingleValuedRESTParameters}</notNullAnnotationNameForSingleValuedRESTParameters>
 						<generateNotEmptyAnnotationForMultiValuedRESTParameters>${generateNotEmptyAnnotationForMultiValuedRESTParameters}</generateNotEmptyAnnotationForMultiValuedRESTParameters>
 						<notEmptyAnnotationNameForMultiValuedRESTParameters>${notEmptyAnnotationNameForMultiValuedRESTParameters}</notEmptyAnnotationNameForMultiValuedRESTParameters>
+
+						<enumSubsetAnnotationClassName>${enumSubsetAnnotationClassName}</enumSubsetAnnotationClassName>
+						<typeRestrictionAnnotationClassName>${typeRestrictionAnnotationClassName}</typeRestrictionAnnotationClassName>
 
 						<generateHeavyExtensibleEnums>${generateHeavyExtensibleEnums}</generateHeavyExtensibleEnums>
 
@@ -2272,6 +2327,7 @@
 						<openAPIVersion>${openAPIVersion}</openAPIVersion>
 						<openAPISpecVersionInfo>${openAPISpecVersionInfo}</openAPISpecVersionInfo>
 						<activeOpenAPIValidationGroups>${activeOpenAPIValidationGroups}</activeOpenAPIValidationGroups>
+						<openAPIExtensions>${openAPIExtensions}</openAPIExtensions>
 
 						<openAPISpecReferenceDefaultLocation>${openAPISpecReferenceDefaultLocation}</openAPISpecReferenceDefaultLocation>
 
@@ -2292,6 +2348,7 @@
 						<openAPITermsOfUseURL>${openAPITermsOfUseURL}</openAPITermsOfUseURL>
 
 						<addIgnoredHeadersToOpenAPISpec>${addIgnoredHeadersToOpenAPISpec}</addIgnoredHeadersToOpenAPISpec>
+						<openAPINamespacePackages>${openAPINamespacePackages}</openAPINamespacePackages>
 						<suppressClassNameCommentInOpenAPISpec>${suppressClassNameCommentInOpenAPISpec}</suppressClassNameCommentInOpenAPISpec>
 						<suppressNotRequiredNullableInOpenAPISpec>${suppressNotRequiredNullableInOpenAPISpec}</suppressNotRequiredNullableInOpenAPISpec>
 
@@ -2320,6 +2377,9 @@
 						<breakingChangesReportName>${breakingChangesReportName}</breakingChangesReportName>
 						<breakingChangesReportFileName>${breakingChangesReportFileName}</breakingChangesReportFileName>
 						<breakingChangesReportGroupByPackage>${breakingChangesReportGroupByPackage}</breakingChangesReportGroupByPackage>
+
+						<generateMigrationReport>${generateMigrationReport}</generateMigrationReport>
+						<migrationReportFileName>${migrationReportFileName}</migrationReportFileName>
 
 						<generateRESTDeprecationReport>${generateRESTDeprecationReport}</generateRESTDeprecationReport>
 						<restDeprecationReportName>${restDeprecationReportName}</restDeprecationReportName>
