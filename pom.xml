@@ -29,16 +29,6 @@
 	</scm>
 
 
-	<!--
-	<distributionManagement>
-		<snapshotRepository>
-			<id>github</id>
-			<url>https://maven.pkg.github.com/anaptecs/jeaf-generator-project-parent</url>
-		</snapshotRepository>
-	</distributionManagement>
-	-->
-
-
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
