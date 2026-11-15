@@ -29,12 +29,14 @@
 	</scm>
 
 
+	<!--
 	<distributionManagement>
 		<snapshotRepository>
 			<id>github</id>
 			<url>https://maven.pkg.github.com/anaptecs/jeaf-generator-project-parent</url>
 		</snapshotRepository>
 	</distributionManagement>
+	-->
 
 
 	<licenses>
