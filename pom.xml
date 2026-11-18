@@ -77,7 +77,7 @@
 
 
 		<!-- Version of JEAF Generator that should be used. -->
-		<maven.jeaf-generator-plugin.version>1.32.1</maven.jeaf-generator-plugin.version>
+		<maven.jeaf-generator-plugin.version>1.32.3</maven.jeaf-generator-plugin.version>
 		<jeaf-generator-project-template-model.version>0.1.0-SNAPSHOT</jeaf-generator-project-template-model.version>
 
 		<!-- Versions for JEAF APIs (added via dependency management) -->
@@ -1068,6 +1068,17 @@
 			referenced spec files.
 		-->
 		<validateReferencedOpenAPISpecs>true</validateReferencedOpenAPISpecs>
+
+		<!--
+			Regular expression to exclude files from OpenAPI validation. All YAML files in resourceGenDirectory are validated
+			as OpenAPI specifications. If other YAML files are generated into the same directory (e.g. by custom templates)
+			they can be excluded using this parameter. The expression has to match the complete file name (without
+			directory). By default no file is excluded.
+
+			Example:
+				<openAPIValidationExcludePattern>.*-nam\.ya?ml</openAPIValidationExcludePattern>
+		-->
+		<openAPIValidationExcludePattern></openAPIValidationExcludePattern>
 
 		<!--
 			Parameter defines which OpenAPI version is used when generating OpenAPI specifications. As there are breaking
@@ -2315,6 +2326,7 @@
 						<disableOpenAPIDependencyChecks>${disableOpenAPIDependencyChecks}</disableOpenAPIDependencyChecks>
 						<validateOpenAPISpec>${validateOpenAPISpec}</validateOpenAPISpec>
 						<validateReferencedOpenAPISpecs>${validateReferencedOpenAPISpecs}</validateReferencedOpenAPISpecs>
+						<openAPIValidationExcludePattern>${openAPIValidationExcludePattern}</openAPIValidationExcludePattern>
 
 						<openAPIVersion>${openAPIVersion}</openAPIVersion>
 						<openAPISpecVersionInfo>${openAPISpecVersionInfo}</openAPISpecVersionInfo>
