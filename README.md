@@ -355,6 +355,7 @@ All of the following parameters are exposed as Maven properties on this POM and 
 | `disableOpenAPIDependencyChecks`                   | `false`             | Disable dependency checks that ensure referenced types can be resolved. |
 | `validateOpenAPISpec`                             | `true`              | Validate generated OpenAPI specification. |
 | `validateReferencedOpenAPISpecs`                   | `true`              | Also validate referenced OpenAPI spec files. |
+| `openAPIValidationExcludePattern`                  | *(empty)*          | Regular expression for file names (without directory) that are excluded from OpenAPI validation, e.g. `.*-nam\.ya?ml`. |
 | `openAPIVersion`                                  | `OPEN_API_3_0`      | OpenAPI version used for generation. Supported: `OPEN_API_3_0`, `OPEN_API_3_1`. |
 | `openAPISpecVersionInfo`                          | *(empty)*          | Explicit version info for the OpenAPI `info` section. |
 | `activeOpenAPIValidationGroups`                    | *(empty)*          | Fully qualified names of active validation groups (comma separated). |
