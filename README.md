@@ -224,6 +224,7 @@ All of the following parameters are exposed as Maven properties on this POM and 
 | `disableSourceFormatting`                    | `false`                      | Disable formatting of generated sources only. |
 | `disableSrcDirFormatting`                    | `false`                      | Disable formatting of the `src` directory. |
 | `disableResourceFormatting`                  | `false`                      | Disable formatting of generated resources only. |
+| `lineEnding`                                 | `LF`                         | Line ending of all generated files and of formatted Java files: `LF`, `CRLF` or `AUTO` (line ending of the operating system). |
 | `javaFormatterStyleFile`                     | `anaptecs_code_guideline.xml` | Code style definition for Java code. |
 | `xmlFormatterStyleFile`                      | `anaptecs_xml_style.properties` | Code style definition for XML. |
 | `removeUnusedImports`                        | `true`                       | Remove unused imports from generated code. |
