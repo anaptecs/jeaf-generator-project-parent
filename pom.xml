@@ -292,6 +292,12 @@
 		<disableResourceFormatting>false</disableResourceFormatting>
 
 		<!--
+			Line ending of all generated files and of formatted Java files: LF (default), CRLF or AUTO for the line ending of
+			the operating system on which JEAF Generator is executed.
+		-->
+		<lineEnding>LF</lineEnding>
+
+		<!--
 			Reference to the file that contains the code style definition for Java code. If it is not defined then the default
 			code style will be used.
 		-->
@@ -2155,6 +2161,7 @@
 						<disableSourceFormatting>${disableSourceFormatting}</disableSourceFormatting>
 						<disableSrcDirFormatting>${disableSrcDirFormatting}</disableSrcDirFormatting>
 						<disableResourceFormatting>${disableResourceFormatting}</disableResourceFormatting>
+						<lineEnding>${lineEnding}</lineEnding>
 
 						<javaFormatterStyleFile>${javaFormatterStyleFile}</javaFormatterStyleFile>
 						<xmlFormatterStyleFile>${xmlFormatterStyleFile}</xmlFormatterStyleFile>
