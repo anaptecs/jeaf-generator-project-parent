@@ -85,7 +85,7 @@
 		<jeaf-validation-api.version>1.12.0</jeaf-validation-api.version>
 
 		<!-- Version for Spring Boot (added via dependency management) -->
-		<spring-boot.version>4.1.0</spring-boot.version>
+		<spring-boot.version>4.2.0</spring-boot.version>
 
 		<!-- Version for Jackson 3 (added via dependency management)-->
 		<jackson3-version>3.2.0</jackson3-version>
